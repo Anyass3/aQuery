@@ -1,1 +1,75 @@
 # aQuery
+### Redisigning JQuery : If you a like me, you hate large js libraries
+##### this is minimal library similar to Jquery in most ways with somewhat fewer features but amazing
+# Installation
+`npm install aquery -dev`
+## To get started quickly try the CDN:
+`link` 
+
+### getting started using npm:
+```
+import {Aq, $, $$$, $new, $old, $many} from "aquery.js"
+
+#query selector
+$("a")
+$("a").$$ // ths will get the actual element 
+$(['a','#navlink','p']) //this queries each of those selectors in one instance
+#query selectorAll
+$$$('a')
+
+#new element
+$new('a')
+$new('a',many=false) default
+
+#create 10 anchor tags and append it to a div
+let div=$('div')
+let anchors=$new('a',10)
+anchors.appendParent(div.$$) || div.append(anchors.$$)
+anchors.addClass('d-none')
+anchors.addclass(['d-none','btn', 'btn-link'])
+anchors.class //this will get the className of all the anchors
+anchors.class="btn-link d-none" //this will set the className of all the anchors
+anchors.rmClass('d-none')
+anchors.toggleClass
+anchors.on('click',runfunc)
+
+```
+### there are lots of cool methods and properties
+```
+.run //this will run a func for all element queried
+.prop //to get or set any property 
+.attr //to get or set any attributes. to set multiple attrs pass in a list
+    .attr('id')//to get 
+    .attr('id','hmm')//to set id to hmm
+    .rmAttr('id')// to remove/del an attr
+    #attrs functions similar to prop
+.hide .show .toggleDisplay #these are self explaining
+
+.html //to get or set the innerHTML
+.text //to get or set the textContent
+.val //to get or set form inputs or textarea or files or checkboxes or radios etc
+    //you do not need to think whether it is .value or .checked or .files etc. it will do the job for you
+    //NOTE: NOT ALL INPUT TYPES CAN BE SET
+```
+### to set a style
+```
+.css('width')//to get the width
+.css('width','100%') // to set the width to 100%
+.css('width','100%',true) //to set it as important
+.css(['width','height','display']) //to get those values
+.css(width:"100%",display:"flex !important")// to set it
+```
+### to add a new element or new query to a query or any instance of Aq
+```
+$("div#main").$new('p').text='this a new paragraph'
+$("div#main").$('p').run(e=>console.log(e))
+$("div#main").$$$("p") // to querySelcetorAll p tags in the div
+```
+### so many other cool things
+##### Get a form data without hussle
+```
+$("form").$$$(["input","select","textarea]).val //this will return an object which can directly be sent to the server
+## NOTE: the inputs should have a name or id attrs set
+```
+!!!ENJOY
+### so much more to come
