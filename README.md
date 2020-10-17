@@ -1,6 +1,8 @@
 # aQuery
-### Re-designing JQuery : If you are like me, you hate large js libraries
+### Re-designing JQuery : If you are like me, you hate large js libraries 
 ##### this is minimal library similar to Jquery in some ways with somewhat fewer features but amazing
+### This was a personal mini project to help me code js faster. If interested you can try it. 
+
 # Installation
 `npm i abquery --save`
 ## To get started quickly try the CDN:
@@ -9,7 +11,12 @@
 ### getting started using npm:
 ```
 import {Aq, $, $$$, $new, $old, $many} from "abquery"
-
+#### `Aq` is the main class object
+#### `$` is similar to `document.querySelector` but with the Aq instance
+#### `$$$` is similar to `document.querySelectorAll` but with the Aq instance
+#### `$new` it's used to create a html element with the Aq instance
+#### `$old` useful when you want an element to have an Aq instance as it has useful methods
+#### `$many` it the plural or `$old`
 
 #query selector
 
@@ -81,5 +88,5 @@ $("form").$$$(["input","select","textarea]).val //this will return an object whi
 ```
 !!!ENJOY
 ### so much more to come
-Like model time-ago tooltips fetch etc
+Like modal time-ago tooltips fetch etc
 ## issues are most welcomed
