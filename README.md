@@ -65,7 +65,7 @@ anchors.on('click',runfunc)
 .css('width','100%') // to set the width to 100%
 .css('width','100%',true) //to set it as important
 .css(['margin-top','height','display']) //to get those values
-.css(width:"100%",display:"flex !important")// to set it
+.css({width:"100%",display:"flex !important"})// to set it
 ```
 ### to add a new element or new query to a query or any instance of Aq
 ```
