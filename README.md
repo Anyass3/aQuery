@@ -4,7 +4,7 @@
 # Installation
 `npm install aquery -dev`
 ## To get started quickly try the CDN:
-`link` 
+`https://cdn.jsdelivr.net/npm/abquery@0.1.0/dist/query.min.js` 
 
 ### getting started using npm:
 ```
@@ -38,12 +38,13 @@ anchors.on('click',runfunc)
 ```
 .run //this will run a func for all element queried
 .prop //to get or set any property 
-.attr //to get or set any attributes. to set multiple attrs pass in a list
+.attr //to get or set any attributes. to get multiple attrs pass in a list of attrs
+        // to set multiple attrs pass in an object
     .attr('id')//to get 
     .attr('id','hmm')//to set id to hmm
     .rmAttr('id')// to remove/del an attr
     #attrs functions similar to prop
-.hide .show .toggleDisplay #these are self explaining
+.hide .show .toggleDisplay #these are self explainatory
 
 .html //to get or set the innerHTML
 .text //to get or set the textContent
@@ -51,7 +52,7 @@ anchors.on('click',runfunc)
     //you do not need to think whether it is .value or .checked or .files etc. it will do the job for you
     //NOTE: NOT ALL INPUT TYPES CAN BE SET
 ```
-### to set a style
+### dealing with styles
 ```
 .css('width')//to get the width
 .css('width','100%') // to set the width to 100%
@@ -72,4 +73,4 @@ $("form").$$$(["input","select","textarea]).val //this will return an object whi
 ## NOTE: the inputs should have a name or id attrs set
 ```
 !!!ENJOY
-### so much more to come
+### so much more to come 

@@ -1,0 +1,26 @@
+{
+  "name": "abquery",
+  "version": "0.1.0",
+  "description": "a very lightweight library like JQuery with fewer features and somewhat different",
+  "jsdelivr":"./dist/query.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anyass3/aQuery.git"
+  },
+  "keywords": [
+    "lightweight Jquery",
+    "Jquery",
+    "query",
+    "mini library"
+  ],
+  "author": "Abdoulie Nyass",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Anyass3/aQuery/issues"
+  },
+  "homepage": "https://github.com/Anyass3/aQuery#readme"
+}
