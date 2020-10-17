@@ -9,13 +9,17 @@
 `https://cdn.jsdelivr.net/npm/abquery@0.1.0/dist/query.min.js` 
 
 #### `Aq` is the main class object
+##### This is the main library
+##### you can use 8t only with the new key except when accessing the static methods
+
 #### `$` is similar to `document.querySelector` but with the Aq instance
 #### `$$$` is similar to `document.querySelectorAll` but with the Aq instance
 #### `$new` it's used to create a html element with the Aq instance
 #### `$old` useful when you want an element to have an Aq instance as it has useful methods
-#### `$many` it the plural or `$old`
+#### `$many` it the plural of `$old`
 
-### getting started using npm:
+## getting started using npm:
+##### import what you need
 ```
 import {Aq, $, $$$, $new, $old, $many} from "abquery"
 
