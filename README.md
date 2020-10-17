@@ -8,15 +8,16 @@
 ## To get started quickly try the CDN:
 `https://cdn.jsdelivr.net/npm/abquery@0.1.0/dist/query.min.js` 
 
-### getting started using npm:
-```
-import {Aq, $, $$$, $new, $old, $many} from "abquery"
 #### `Aq` is the main class object
 #### `$` is similar to `document.querySelector` but with the Aq instance
 #### `$$$` is similar to `document.querySelectorAll` but with the Aq instance
 #### `$new` it's used to create a html element with the Aq instance
 #### `$old` useful when you want an element to have an Aq instance as it has useful methods
 #### `$many` it the plural or `$old`
+
+### getting started using npm:
+```
+import {Aq, $, $$$, $new, $old, $many} from "abquery"
 
 #query selector
 
