@@ -10,18 +10,25 @@
 ```
 import {Aq, $, $$$, $new, $old, $many} from "abquery"
 
+
 #query selector
+
 $("a")
 $("a").$$ // ths will get the actual element 
 $(['a','#navlink','p']) //this queries each of those selectors in one instance
+
+
 #query selectorAll
+
 $$$('a')
 
 #new element
+
 $new('a')
 $new('a',many=false) default
 
 #create 10 anchor tags and append it to a div
+
 let div=$('div')
 let anchors=$new('a',10)
 anchors.appendParent(div.$$) || div.append(anchors.$$)
@@ -57,14 +64,14 @@ anchors.on('click',runfunc)
 .css('width')//to get the width
 .css('width','100%') // to set the width to 100%
 .css('width','100%',true) //to set it as important
-.css(['width','height','display']) //to get those values
+.css(['margin-top','height','display']) //to get those values
 .css(width:"100%",display:"flex !important")// to set it
 ```
 ### to add a new element or new query to a query or any instance of Aq
 ```
 $("div#main").$new('p').text='this a new paragraph'
 $("div#main").$('p').run(e=>console.log(e))
-$("div#main").$$$("p") // to querySelcetorAll p tags in the div
+$("div#main").$$$("p").on('mouseover',e=>console.log(e)).on('click',func).prop('offsetWidth') // to querySelcetorAll p tags in the div
 ```
 ### so many other cool things
 ##### Get a form data without hussle
