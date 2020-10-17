@@ -1,5 +1,5 @@
 # aQuery
-### Re-designing JQuery : If you a like me, you hate large js libraries
+### Re-designing JQuery : If you are like me, you hate large js libraries
 ##### this is minimal library similar to Jquery in most ways with somewhat fewer features but amazing
 # Installation
 `npm i abquery --save`
