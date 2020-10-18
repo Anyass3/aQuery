@@ -5,7 +5,7 @@
 
 # Installation
 `npm i abquery --save`
-## To get started quickly try the CDN:
+## To get started quickly try the CDN instead:
 `https://cdn.jsdelivr.net/npm/abquery@0.1.1/dist/query.min.js` 
 
 
