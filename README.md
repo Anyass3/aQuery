@@ -92,7 +92,7 @@ $("div#main").$$$("p").on('mouseover',e=>console.log(e)).on('click',func).prop('
 ## You can check the code to see the other methods
 ##### Get a form data without hussle
 ```
-$("form").$$$(["input","select","textarea]).val //this will return an object which can directly be sent to the server
+$("form").$$$(["input","select","textarea"]).val //this will return an object which can directly be sent to the server
 ## NOTE: the inputs should have a name or id attrs set
 ```
 !!!ENJOY
