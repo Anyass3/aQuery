@@ -62,7 +62,7 @@ anchors.toggleClass
 $$$("[data-toggle=modal]").on('click',(e)=>$(`${$old(e.target).attr("data-target")}`).toggleClass("show"))
 
 ```
-### here are cool methods and properties
+### here are some cool methods and properties
 ```
 .run //this will run a func for all element queried
 .prop //to get or set any property 
