@@ -84,7 +84,7 @@ class Aq {
     css(props,value,imp=false){
         const split=(v,s='!')=> [v.split(s)[0].trim(),imp?imp:!!v.split(s)[1]]
         return this.$set((e,prop,val)=>{
-            if (Aq.is_array(props)||!val)
+            if (Aq.is_array(props)||value===undefined)
                 return e.style.getPropertyValue(prop)
                 //e.style.cssText=Aq.obj_text(props,e.style.cssText);
             else{
@@ -98,7 +98,7 @@ class Aq {
     });}
     attr(props,value){
         return this.$set((e,prop,val)=>{
-            if (Aq.is_array(props)||!val)
+            if (Aq.is_array(props)||value===undefined)
                 return e.getAttribute(prop);
             e.setAttribute(prop, val);
         },props,value); 
@@ -154,20 +154,20 @@ class Aq {
         this.run((e)=>{
             if (Aq.is_dict(props))
                 for(let key in props) func(e,key,props[key]);
-            else if(Aq.is_array(props)||!value){
+            else if(Aq.is_array(props)||value===undefined){
                 if(propsIsStr) props=[props];
                 attrs = [...attrs,...props.reduce((arr,key)=>{
                         return [...arr,func(e,key)]
                     },[])];
             }else func(e,props,value)
         });
-        if((Aq.is_array(props) || propsIsStr)&&!value)
+        if((Aq.is_array(props) || propsIsStr)&&value===undefined)
             return (Aq.is_html(this.$$,false)&&propsIsStr)?attrs[0]:attrs;
         return this
     }
     prop(props,value){
         return this.$set((e,prop,val)=>{
-            if (Aq.is_array(props)||!val)
+            if (Aq.is_array(props)||value===undefined)
                 return e[prop];
             try{e[prop]=val}
             catch(err){console.error(err)}
