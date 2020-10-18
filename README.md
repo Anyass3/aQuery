@@ -100,6 +100,40 @@ $("div#main").$$$("p").on('mouseover',e=>console.log(e)).on('click',func).prop('
 $("form").$$$(["input","select","textarea"]).val //this will return an object which can directly be sent to the server
 ## NOTE: the inputs should have a name or id attrs set
 ```
+### some useful static methods
+```
+Aq.form_value(input_element) 
+        gets the value whether its .checked,.value, select fields
+
+Aq.form_data(list_of_inputs)
+        similar to above but returns an object
+
+Aq.css_prefix('css style')
+        eg: Aq.css_prefix("transform: scale(.8)")
+
+            returns=> transform: scale(.8);-webkit-transform: scale(.8);-moz-transform: scale(.8);
+
+Aq.gen_frames(name,frames) 
+        it will generate keyframes
+        eg: Aq.gen_frames('animatekf',`0% {${Aq.css_prefix('transform: scale(1)')}opacity: 1;} to{opacity: 0}`)
+
+        returns=>  
+        @keyframes animatekf {0% {transform: scale(1);-webkit-transform: scale(1);-moz-transform: scale(1);opacity: 1;} to{opacity: 0}}
+        @-webkit-keyframes animatekf {0% {transform: scale(1);-webkit-transform: scale(1);-moz-transform: scale(1);opacity: 1;} to{opacity: 0}}
+
+Aq.add_keyframes(name,frames,id=Aq.styleElementId) 
+         does just the above but adds it to the dom
+         if the style element id specified does not exist
+         it will create it instead
+         and later append the keyframes
+
+Aq.add_style(selector,rules,id=Aq.styleElementId)
+        it is used to create a css style
+        eg: to create a new class
+            Aq.add_style('.classname','margin-top:50px;padding:20px 12px;')
+            
+            Now you can use that class in your elements
+```
 !!!ENJOY
 ### so much more to come
 Like modal time-ago tooltips fetch etc
