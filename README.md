@@ -50,7 +50,11 @@ anchors.class //this will get the className of all the anchors
 anchors.class="btn-link d-none" //this will set the className of all the anchors
 anchors.rmClass('d-none')
 anchors.toggleClass
-anchors.on('click',runfunc)
+```
+// let say there are elements/anchors with a data-toggle="modal" and a data-target property that is equal to a query to toggle
+// like how bootstrap declares its modals
+```
+$$$("[data-toggle=modal]").on('click',(e)=>$(`${$old(e.target).attr("data-target")}`).toggleClass("show"))
 
 ```
 ### here are cool methods and properties
