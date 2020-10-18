@@ -10,7 +10,7 @@
 
 #### `Aq` is the main class object
 ##### This is the main library
-##### you can use 8t only with the new key except when accessing the static methods
+##### you can use it only with the new key except when accessing the static methods
 
 #### `$` is similar to `document.querySelector` but with the Aq instance
 #### `$$$` is similar to `document.querySelectorAll` but with the Aq instance
