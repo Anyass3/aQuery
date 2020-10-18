@@ -30,7 +30,7 @@ class Aq {
     }
     //methods
     show({cls='',animate='abquery-show',delay=600,keep=false}={},func=()=>{}){
-        if (!cls) this.rmClass(['abquery-d-none','d-none']);
+        if (!cls) this.rmClass(['abquery-d-none','d-none']).rmCss('display');
         else this.addClass(cls);
         this.addClass(animate);
         setTimeout(()=>{
@@ -84,7 +84,7 @@ class Aq {
     css(props,value,imp=false){
         const split=(v,s='!')=> [v.split(s)[0].trim(),imp?imp:!!v.split(s)[1]]
         return this.$set((e,prop,val)=>{
-            if (Aq.is_array(props)||value===undefined)
+            if (Aq.is_array(props)||val===undefined)
                 return e.style.getPropertyValue(prop)
                 //e.style.cssText=Aq.obj_text(props,e.style.cssText);
             else{
@@ -98,7 +98,7 @@ class Aq {
     });}
     attr(props,value){
         return this.$set((e,prop,val)=>{
-            if (Aq.is_array(props)||value===undefined)
+            if (Aq.is_array(props)||val===undefined)
                 return e.getAttribute(prop);
             e.setAttribute(prop, val);
         },props,value); 
@@ -113,14 +113,13 @@ class Aq {
             node.appendChild(e)
         },nodes);
     }
-    detachParent(nodes){
-        return this.$run((e,node)=>{
-                node.removeChild(e)
-            },nodes);
+    detachParent(){
+        return this.run((e)=>{
+                e.parentNode.removeChild(e)
+            });
     }
     append(nodes){
         return this.$run((e,node)=>{
-            console.log(node)
             e.appendChild(node);
         },nodes);
     }
@@ -162,12 +161,12 @@ class Aq {
             }else func(e,props,value)
         });
         if((Aq.is_array(props) || propsIsStr)&&value===undefined)
-            return (Aq.is_html(this.$$,false)&&propsIsStr)?attrs[0]:attrs;
+            return (this.arr.length===1&&propsIsStr)?attrs[0]:attrs;
         return this
     }
     prop(props,value){
         return this.$set((e,prop,val)=>{
-            if (Aq.is_array(props)||value===undefined)
+            if (Aq.is_array(props)||val===undefined)
                 return e[prop];
             try{e[prop]=val}
             catch(err){console.error(err)}
@@ -235,7 +234,6 @@ class Aq {
     $new(tag,many){
         let _new = $new(tag,many)
         this.append(_new.$$)
-        //console.log(_new)
         return _new
     }
     //end
@@ -245,8 +243,7 @@ class Aq {
         NodeList===arr.__proto__.constructor
     }
     static is_html(el,arr=true){
-        const is_html=(e)=>e.__proto__.constructor===HTMLElement
-        ||e.__proto__.__proto__.constructor===HTMLElement
+        const is_html=(e)=>e.__proto__.constructor.toString().includes('HTML')
         if(arr){
             if(!Aq.is_array(el))el=[el];
             return is_html(el[0])
@@ -291,7 +288,7 @@ class Aq {
         },'')
     }
     static init_style_defaults(){
-        if($('[abquery-init_style_defaults]').$$) return;
+        if($('abquery-init_style_defaults').$$) return;
         let show = `${Aq.css_prefix('animation: abquery-keyframe-show .6s cubic-bezier(0, 0.9, 0.3, 1.2) forwards')}
         opacity: 0;${Aq.css_prefix("transform: translateY(-4rem) scale(.8)")}`
         let hidekf = `0% {${Aq.css_prefix('transform: scale(1)')}opacity: 1;}
