@@ -1,12 +1,26 @@
 # aQuery
-### Re-designing JQuery : If you are like me, you hate large js libraries
+### Re-designing JQuery : If you are like me, you hate large js libraries 
 ##### this is minimal library similar to Jquery in some ways with somewhat fewer features but amazing
+### This was a personal mini project to help me code js faster. If interested you can try it. 
+
 # Installation
 `npm i abquery --save`
 ## To get started quickly try the CDN:
-`https://cdn.jsdelivr.net/npm/abquery@0.1.0/dist/query.min.js` 
+`https://cdn.jsdelivr.net/npm/abquery@0.1.1/dist/query.min.js` 
 
-# getting started using npm:
+
+#### `Aq` is the main class object
+This is the main library
+you can use it only with the js new keyword except when accessing the static methods
+
+#### `$` is similar to `document.querySelector` but with the Aq instance
+#### `$$$` is similar to `document.querySelectorAll` but with the Aq instance
+#### `$new` it's used to create a html element with the Aq instance
+#### `$old` useful when you want an element to have an Aq instance as it has useful methods
+#### `$many` it the plural of `$old`
+
+## getting started using npm:
+##### import what you need
 `import {Aq, $, $$$, $new, $old, $many} from "abquery"`
 
 ### NOTE: for some hide and show features you have to run this:
@@ -41,10 +55,14 @@ anchors.class //this will get the className of all the anchors
 anchors.class="btn-link d-none" //this will set the className of all the anchors
 anchors.rmClass('d-none')
 anchors.toggleClass
-anchors.on('click',runfunc)
+```
+// let say there are elements/anchors with a data-toggle="modal" and a data-target property that is equal to a query to toggle
+// like how bootstrap declares its modals
+```
+$$$("[data-toggle=modal]").on('click',(e)=>$(`${$old(e.target).attr("data-target")}`).toggleClass("show"))
 
 ```
-### there are lots of cool methods and properties
+### here are cool methods and properties
 ```
 .run //this will run a func for all element queried
 .prop //to get or set any property 
@@ -76,11 +94,13 @@ $("div#main").$new('p').text='this a new paragraph'
 $("div#main").$('p').run(e=>console.log(e))
 $("div#main").$$$("p").on('mouseover',e=>console.log(e)).on('click',func).prop('offsetWidth') // to querySelcetorAll p tags in the div
 ```
-### so many other cool things
+## You can check the code to see the other methods
 ##### Get a form data without hussle
 ```
-$("form").$$$(["input","select","textarea]).val //this will return an object which can directly be sent to the server
+$("form").$$$(["input","select","textarea"]).val //this will return an object which can directly be sent to the server
 ## NOTE: the inputs should have a name or id attrs set
 ```
 !!!ENJOY
-### so much more to come 
+### so much more to come
+Like modal time-ago tooltips fetch etc
+## issues are most welcomed
