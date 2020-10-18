@@ -29,25 +29,25 @@ class Aq {
         }this.arr=Array.from(many ? this.$$:[this.$$])
     }
     //methods
-    show({cls='',animate='animate-pop-in',delay=600,keep=false}={},func=()=>{}){
-        if (!cls) this.rmClass('d-none');
+    show({cls='',animate='abquery-show',delay=600,keep=false}={},func=()=>{}){
+        if (!cls) this.rmClass(['abquery-d-none','d-none']);
         else this.addClass(cls);
         this.addClass(animate);
         setTimeout(()=>{
                 if(!keep)this.rmClass(animate)
             },delay);func(); return this
     }
-    hide({cls='',animate="animate-pop-out",delay=600,keep=false}={},func=()=>{}){
+    hide({cls='',animate="abquery-hide",delay=600,keep=false}={},func=()=>{}){
         this.addClass(animate);
         setTimeout(()=>{
-                if(!cls) this.addClass('d-none');
+                if(!cls) this.addClass('abquery-d-none');
                 else this.rmClass(cls);
                 if(!keep)this.rmClass(animate)
             },delay); func(); return this
     }
     toggleDisplay({cls=''}={}){
         return this.run((el)=>{
-            if (el.classList.contains(!cls ? 'd-none':cls)){
+            if ($old(el).hasClass(!cls ? ['abquery-d-none','d-none']:cls,{someClass:true})){
                 this.show({cls})
             }else{
                 this.hide({cls})
@@ -183,8 +183,8 @@ class Aq {
     get parents(){
         let arr=Array.from(this.arr.reduce((set,e)=>{
          return  set.add(e.parentNode)
-        },new Set()));parent=$many(arr);
-    ; return parent
+        },new Set()));
+    ; return $many(arr)
     }
     get child(){//needs improvement
         return $old(this.arr[0].childNodes[0])
@@ -203,7 +203,7 @@ class Aq {
         if(keys.length===1) return data[keys[0]]
         else return data
     }
-    set class(className){return this.prop('className',className)}
+    set class(className){this.prop('className',className)}
     set html(html){this.prop('innerHTML',html)}
     set text(text){this.prop('textContent',text)}
     set val(value){
@@ -280,6 +280,44 @@ class Aq {
         .map((option) => option.value);
         else return null
     }
+    static styleElementId = "abquery-stylesheet";
+    static css_prefix(rule){
+        return ['','-webkit-','-moz-'].reduce((str,pre)=>{
+            return str+=`${pre}${rule.trim()};`
+        },'')
+    }
+    static init_style_defaults(){
+        if($('abquery-init_style_defaults').$$) return;
+        let show = `${Aq.css_prefix('animation: abquery-keyframe-show .6s cubic-bezier(0, 0.9, 0.3, 1.2) forwards')}
+        opacity: 0;${Aq.css_prefix("transform: translateY(-4rem) scale(.8)")}`
+        let hidekf = `0% {${Aq.css_prefix('transform: scale(1)')}opacity: 1;}
+        20%{${Aq.css_prefix('transform: scale(.9)')}} 100% {${Aq.css_prefix('transform: none')}opacity: 0;}`
+        Aq.add_keyframes('abquery-keyframe-show',`100%{opacity: 1;${Aq.css_prefix('transform: none')}}`)
+        Aq.add_style(".abquery-show",show); Aq.add_keyframes("abquery-keyframe-hide",hidekf)
+        Aq.add_style(".abquery-hide",`${Aq.css_prefix("animation: abquery-keyframe-hide .6s ease-out")}`)
+        return Aq.add_style(".abquery-d-none","display:none !important").attr('abquery-init_style_defaults',true)
+    }
+    static gen_frames(name,frames){
+        return `
+        @keyframes ${name} {${frames}}
+        @-webkit-keyframes ${name} {${frames}}
+        `
+    }
+    static get_styles(id=Aq.styleElementId){
+        let aqstyles=$(`#${id}`);
+        if(!aqstyles.$$)aqstyles=$new('style').attr({type:"text/css",id:`${id}`});
+        return aqstyles
+    }
+    static add_keyframes(name,frames,id=Aq.styleElementId){
+        const aqstyles=Aq.get_styles(id)
+        aqstyles.appendParent(document.head).html+=Aq.gen_frames(name,frames)
+        return aqstyles
+    }
+    static add_style(selector,rules,id){
+        const aqstyles=Aq.get_styles(id)
+        aqstyles.appendParent(document.head).html+=`${selector} {${rules}}`
+        return aqstyles
+    }
     //end
 
 }
@@ -289,3 +327,5 @@ const $many=(el)=>new Aq({el,many:true})
 
 const $=(query)=>new Aq({query});
 const $$$=(query)=>new Aq({query,many:true})
+
+Aq.init_style_defaults()

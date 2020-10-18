@@ -6,24 +6,27 @@
 ## To get started quickly try the CDN:
 `https://cdn.jsdelivr.net/npm/abquery@0.1.0/dist/query.min.js` 
 
-### getting started using npm:
+# getting started using npm:
+`import {Aq, $, $$$, $new, $old, $many} from "abquery"`
+
+### NOTE: for some hide and show features you have to run this:
+this is only for npm, for the cdn no need
+`Aq.init_style_defaults()`
+
+#### query selector
 ```
-import {Aq, $, $$$, $new, $old, $many} from "abquery"
-
-
-#query selector
-
 $("a")
 $("a").$$ // ths will get the actual element 
 $(['a','#navlink','p']) //this queries each of those selectors in one instance
-
-
-#query selectorAll
-
+```
+#### query selectorAll
+```
 $$$('a')
-
-#new element
-
+$$$(['a','.nav-link']) // select all _a_ tags and .nav-link in one instance
+.$$ // will return a node list
+```
+#### new element
+```
 $new('a')
 $new('a',many=false) default
 
