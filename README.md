@@ -9,8 +9,8 @@
 `https://cdn.jsdelivr.net/npm/abquery@0.1.0/dist/query.min.js` 
 
 #### `Aq` is the main class object
-##### This is the main library
-##### you can use it only with the new key except when accessing the static methods
+This is the main library
+you can use it only with the new key except when accessing the static methods
 
 #### `$` is similar to `document.querySelector` but with the Aq instance
 #### `$$$` is similar to `document.querySelectorAll` but with the Aq instance
