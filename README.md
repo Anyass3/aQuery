@@ -118,7 +118,7 @@ Aq.gen_frames(name,frames)
         eg: Aq.gen_frames('animatekf',`0% {${Aq.css_prefix('transform: scale(1)')}opacity: 1;} 100%{opacity: 0}`)
 
         returns=>  
-        @keyframes animatekf {0% {transform: scale(1);-webkit-transform: scale(1);-moz-transform: scale(1);opacity: 1;} to{opacity: 0}}
+        @keyframes animatekf {0% {transform: scale(1);-webkit-transform: scale(1);-moz-transform: scale(1);opacity: 1;} 100%{opacity: 0}}
         @-webkit-keyframes animatekf {0% {transform: scale(1);-webkit-transform: scale(1);-moz-transform: scale(1);opacity: 1;} 100%{opacity: 0}}
 
 Aq.add_keyframes(name,frames,id=Aq.styleElementId) 
