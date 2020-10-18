@@ -243,10 +243,12 @@ class Aq {
         NodeList===arr.__proto__.constructor
     }
     static is_html(el,arr=true){
+        const is_html=(e)=>e.__proto__.constructor===HTMLElement
+        ||e.__proto__.__proto__.constructor===HTMLElement
         if(arr){
             if(!Aq.is_array(el))el=[el];
-            return el[0].__proto__.__proto__.constructor===HTMLElement
-        }else return el.__proto__.__proto__.constructor===HTMLElement
+            return is_html(el[0])
+        }else return is_html(el)
     }
     static is_dict(dict){
         let d={};
@@ -287,7 +289,7 @@ class Aq {
         },'')
     }
     static init_style_defaults(){
-        if($('abquery-init_style_defaults').$$) return;
+        if($('[abquery-init_style_defaults]').$$) return;
         let show = `${Aq.css_prefix('animation: abquery-keyframe-show .6s cubic-bezier(0, 0.9, 0.3, 1.2) forwards')}
         opacity: 0;${Aq.css_prefix("transform: translateY(-4rem) scale(.8)")}`
         let hidekf = `0% {${Aq.css_prefix('transform: scale(1)')}opacity: 1;}
