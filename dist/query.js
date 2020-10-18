@@ -26,7 +26,7 @@ class Aq {
                         []);
                 else this.$$=document.createElement(el);
             }
-        }this.arr=Array.from(many ? this.$$:[this.$$])
+        }this.arr=Array.from(this.many ? this.$$:[this.$$])
     }
     //methods
     show({cls='',animate='abquery-show',delay=600,keep=false}={},func=()=>{}){
