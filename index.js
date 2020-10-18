@@ -131,8 +131,10 @@ class Aq {
     }
     // useful methods
     run(func,{delay=0,every=0}={}){
-        if(!!every)setInterval(()=>this.arr.forEach(func),every)
-        else setTimeout(()=>this.arr.forEach(func),delay)
+        const arr = this.arr
+        if(!!every)setInterval(()=>arr.forEach(func),every)
+        else if(!!delay) setTimeout(()=>arr.forEach(func),delay)
+        else arr.forEach(func)
         return this;
     }
     $run(func,arr){

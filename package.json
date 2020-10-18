@@ -1,6 +1,6 @@
 {
   "name": "abquery",
-  "version": "0.1.12",
+  "version": "0.1.14",
   "description": "a very lightweight library like JQuery with fewer features and somewhat different",
   "jsdelivr":"./dist/query.js",
   "main": "index.js",
