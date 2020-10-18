@@ -135,6 +135,6 @@ Aq.add_style(selector,rules,id=Aq.styleElementId)
             Now you can use that class in your elements
 ```
 !!!ENJOY
-### so much more to come
+### so more to come
 Like modal time-ago tooltips fetch etc
 ## issues are most welcomed
