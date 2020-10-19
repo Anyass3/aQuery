@@ -39,7 +39,6 @@ $(['a','#navlink','p']) //this queries each of those selectors in one instance
 ```
 $$$('a')
 $$$(['a','.nav-link']) // select all _a_ tags and .nav-link in one instance
-.$$ // will return a node list
 ```
 ### create new element
 ```
@@ -63,6 +62,9 @@ $$$('div').on('click',(ev)=>{
 })
 ```
 if many elments use `$many`
+
+### to get the actual element or nodeList(for selectorAll)
+use `.$$`
 
 #### classes
 ```
