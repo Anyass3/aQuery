@@ -16,17 +16,17 @@
 This is the main library
 you can use it only with the js new keyword except when accessing the static methods
 
-##### `$` is similar to `document.querySelector` but with the Aq instance
-##### `$$$` is similar to `document.querySelectorAll` but with the Aq instance
+##### `$(query)` is similar to `document.querySelector` but with the Aq instance
+##### `$(*query)` is similar to `document.querySelectorAll` but with the Aq instance
 ##### `$new` it's used to create a html element with the Aq instance
 ##### `$el` useful when you want an element to have an Aq instance as it has useful methods
-##### `$many` it the plural of `$el`
+It can a NodeList or an element or even a list/array of  elements
 
 ## getting started using npm:
 ##### import what you need
-`import {Aq, $, $$$, $new, $el, $many} from "abquery"`
+`import {Aq, $, $new, $el} from "abquery"`
 ##### or
-`const {Aq, $, $$$, $new, $el, $many} = require("abquery")` 
+`const {Aq, $, $new, $el} = require("abquery")` 
 
 ### NOTE: for some hide and show features you have to run this:
 this is only for npm, for the cdn no need
@@ -36,17 +36,18 @@ this is only for npm, for the cdn no need
 ```
 $("a")
 $("a").$$ // ths will get the actual element 
-$(['a','#navlink','p']) //this queries each of those selectors in one instance
+$("a, #navlink, p") //this queries each of those selectors in one instance
 ```
+
 ### query selectorAll
 ```
-$$$('a')
-$$$(['a','.nav-link']) // select all _a_ tags and .nav-link in one instance
+$('*a')
+$('* a, .nav-link') // select all _a_ tags and .nav-link in one instance
 ```
 ### create new element
 ```
 $new('a')
-$new('a',many=false) default
+$new('a',num=1) default
 ```
 ##### eg: create 10 anchor tags and append it to a div
 ```
@@ -58,13 +59,12 @@ anchors.appendParent(div.$$) || div.append(anchors.$$)
 ```
 $el(el)
 # usages example
-$$$('div').on('click',(ev)=>{
+$('*div').on('click',(ev)=>{
         ev // this is a click event
         let e=ev.target // to get the actual element
-        $el(e).toggleClass(['class1','class2',etc]).show().attr('id','IDname')
+        $el(e).toggleClass("class1,class2,etc").show().attr('id','IDname')
 })
 ```
-if many elments use `$many`
 
 ### to get the actual element or nodeList(for selectorAll)
 use `.$$`
@@ -80,7 +80,7 @@ use `.$$`
 
 .hasClass(cls,{someClass=false,someEl=false}) # default
         eg: .hasClass('d-none') // checking a single class
-            .hasClass(['class1','class1'],{someClass=false,someEl=false})
+            .hasClass("class1, class1",{someClass=false,someEl=false})
                 someEl will be useful if you queried many elements in an instance od Aq
                  if false returns true only if all the elements have the class
                  else returns true if atleast an element has the class
@@ -92,7 +92,7 @@ getting or setting properties or attributes
 .prop //to get or set any property 
 .attr //to get or set any attributes. 
 
- to GET multiple pass in a list of attrs eg: .attr(['attr1','attr2',etc]) || .prop(['prop1','prop2',etc])
+ to GET multiple pass in a list of attrs eg: .attr('attr1,attr2,etc']) || .prop('prop1,prop2,etc')
  to SET multiple attrs pass in an object eg: .attr({id:'man',etc}) || prop({width:'56px',etc})
  .attr('id')//to GET a single =>SAME for prop
  .attr('id','hmm')//to SET id to hmm : setting single =>SAME for prop
@@ -115,21 +115,21 @@ NB: this has notthing to do with this mini library, thant's how js works
 ```
 ### eventListeners
 `.on('click', func)` //single listener
-`.on(['mouseover','mouseout','click'], func)` // multiple listeners
-
+`.on("mouseover, mouseout, click", func)` // multiple listeners
+You can also write it like this: `.on(['mouseover','mouseout','click'], func)`
 ### dealing with styles
 ```
 .css('width')//to get the width
 .css('width','100%') // to set the width to 100%
 .css('width','100%',true) //to set it as important
-.css(['margin-top','height','display']) //to get those values
+.css("margin-top,height,display") //to get those values
 .css({width:"100%",display:"flex !important"})// to set it
 ```
 ### to add a new element or new query to a query or any instance of Aq
 ```
 $("div#main").$new('p').text='this a new paragraph'
 $("div#main").$('p').run(e=>console.log(e))
-$("div#main").$$$("p").on('mouseover',e=>console.log(e)).on('click',func).prop('offsetWidth') // to querySelcetorAll p tags in the div
+$("div#main").$("*p").on('mouseover',e=>console.log(e)).on('click',func).prop('offsetWidth') // to querySelcetorAll p tags in the div
 ```
 
 ### others
@@ -153,18 +153,18 @@ $("div#main").$$$("p").on('mouseover',e=>console.log(e)).on('click',func).prop('
     
 ######  .children // to get children nodes
 ######  .parent // to get an element/node's parent
-######  .parents // similar to .parent but usefull querySelectorAll/$$$
+######  .parents // similar to .parent but usefull querySelectorAll/$(*q)
  
 ##### Get a form data without hussle
 ```
-$("form").$$$(["input","select","textarea"]).val //this will return an object which can directly be sent to the server
+$("form").$("* input, select, textarea").val //this will return an object which can directly be sent to the server
 #### NOTE: the inputs should have a name or id attrs SET eg: input type file, can only be set/added by a user interraction
 ```
 #### hide and modal eg:
 ###### let say there are elements/anchors with a data-toggle="modal" and a data-target property that is equal to a query to toggle
 ###### like how bootstrap declares its modals
 ```
-$$$("[data-toggle=modal]").on('click',(e)=>$(`${$el(e.target).attr("data-target")}`).toggleClass("show"))
+$("*[data-toggle=modal]").on('click',(e)=>$(`${$el(e.target).attr("data-target")}`).toggleClass("show"))
 
 ```
 ### some useful static methods
@@ -202,6 +202,16 @@ Aq.add_style(selector,rules,id=Aq.styleElementId)
             Now you can use that class in your elements
 ```
 ## You can check the code to see the methods
+### NOTE:
+```
+multiple selectors eg:- $("#nav, a, etc") can ONLY be strings separated by commas.
+
+BUT methods maybe list/array of strings OR strings separated by commas 
+        eg:- .addClass(['hide','nav-link', etc]) or .addClass("hide, nav-link, etc")
+        either is fine 
+```
+#### Also spaces doesn't matter
+
 !!!ENJOY
 ### more to come
 Like modal time-ago tooltips fetch etc

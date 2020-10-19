@@ -1,27 +1,28 @@
 class Aq {
     //$=>selector
     //$$=>element
-    //$$$=>selectorAll
-    constructor({query='',el='',many=false,parent=document}={}){
-        if(many)this.many=true;
+    //$(*)=>selectorAll
+    constructor({query='',parent=document,el='',num=1}={}){
+        this.query=query;
         if(!Aq.is_html(parent))parent=document;
         if(!!query){
-            let queryer;
-            if(many) queryer=(q)=>parent.querySelectorAll(q);
+            let queryer,[query,all] = Aq.clean(this.query,true)
+            if(all){ queryer=(q)=>parent.querySelectorAll(q);this.many=true;}
             else queryer=(q)=>parent.querySelector(q);
             //if query is list it will query the list items
             if(Aq.is_array(query)){
                 this.$$=query.reduce((arr,q)=>{
-                    if (many)
+                    if (all)
                         return [...arr,...queryer(q)];
                     return [...arr,queryer(q)];
                     },[]);this.many=true;
             }else this.$$=queryer(query);
         }else{
+            if(num>1||Aq.is_array(el))this.many=true;
             if(Aq.is_html(el))this.$$=el;
             else{
-                if(typeof(many)==='number')
-                    this.$$=[...Array(many).keys()].reduce(
+                if(num>1)
+                    this.$$=[...Array(num).keys()].reduce(
                         (arr)=>[...arr,document.createElement(el)],
                         []);
                 else this.$$=document.createElement(el);
@@ -30,7 +31,7 @@ class Aq {
     }
     //methods
     show({cls='',animate='abquery-show',delay=600,keep=false}={},func=()=>{}){
-        if (!cls) this.rmClass(['abquery-d-none','d-none']).rmCss('display');
+        if (!cls) this.rmClass('abquery-d-none, d-none').rmCss('display');
         else this.addClass(cls);
         this.addClass(animate);
         setTimeout(()=>{
@@ -84,7 +85,7 @@ class Aq {
     css(props,value,imp=false){
         const split=(v,s='!')=> [v.split(s)[0].trim(),imp?imp:!!v.split(s)[1]]
         return this.$set((e,prop,val)=>{
-            if (Aq.is_array(props)||val===undefined)
+            if (Aq.is_array(Aq.clean(props))||val===undefined)
                 return e.style.getPropertyValue(prop)
                 //e.style.cssText=Aq.obj_text(props,e.style.cssText);
             else{
@@ -98,7 +99,7 @@ class Aq {
     });}
     attr(props,value){
         return this.$set((e,prop,val)=>{
-            if (Aq.is_array(props)||val===undefined)
+            if (Aq.is_array(Aq.clean(props))||val===undefined)
                 return e.getAttribute(prop);
             e.setAttribute(prop, val);
         },props,value); 
@@ -149,6 +150,7 @@ class Aq {
     }
     $set(func,props,value){
         let attrs=[];
+        props = Aq.clean(props)
         let propsIsStr=(typeof(props)==='string')
         this.run((e)=>{
             if (Aq.is_dict(props))
@@ -166,7 +168,7 @@ class Aq {
     }
     prop(props,value){
         return this.$set((e,prop,val)=>{
-            if (Aq.is_array(props)||val===undefined)
+            if (Aq.is_array(Aq.clean(props))||val===undefined)
                 return e[prop];
             try{e[prop]=val}
             catch(err){console.error(err)}
@@ -185,7 +187,7 @@ class Aq {
         let arr=Array.from(this.arr.reduce((set,e)=>{
          return  set.add(e.parentNode)
         },new Set()));
-    ; return $many(arr)
+    ; return $el(arr)
     }
     get child(){//needs improvement
         return $el(this.arr[0].childNodes[0])
@@ -194,7 +196,7 @@ class Aq {
         let children=[]
         this.run((e)=>{
             children=[...children,...Array.from(e.childNodes)]
-        }); return $many(children);
+        }); return $el(children);
     }
     get html(){return this.prop('innerHTML')}
     get text(){return this.prop('textContent')}
@@ -216,23 +218,13 @@ class Aq {
     //end
     //new init
     $(query){
-        let els=[];
-        this.run((e)=>{
-            let el = new Aq({query,parent:e})
-            els.push(el.$$);
-        })
-        return els.length===1 ? $el(els[0]):$many(els)
+        const els=this.arr.reduce((arr,e)=>{
+            return [...arr,...$(query,e).arr]
+        },[])
+        return els.length===1 ? $el(els[0]):$el(els)
     }
-    $$$(query){
-        let els=[];
-        this.run((e)=>{
-            let _els = new Aq({query,many:true,parent:e})
-            els=[...els,..._els.$$];
-        })
-        return $many(els)
-    }
-    $new(tag,many){
-        let _new = $new(tag,many)
+    $new(tag,num){
+        let _new = $new(tag,num)
         this.append(_new.$$)
         return _new
     }
@@ -256,6 +248,13 @@ class Aq {
     static obj_text(props,str=''){
         for(let i in props) str+=`${i}: ${props[i]}; `.trim()
         return str
+    }
+    static clean(q,m=false){
+        if(typeof(q)!=="string")return q; q=q.trim();
+        let all=false;if(q[0]==="*"){q=q.slice(1);all=true};
+        q=q.split(',').reduce((arr,q)=>{return[...arr,q.trim()]},[]);
+        q=q.length===1?q[0]:q
+        return m?[q,all]:q
     }
     static form_data(inputs){
         if(!Aq.is_array(inputs))inputs=[inputs];
@@ -322,11 +321,10 @@ class Aq {
     //end
 
 }
-const $new=(tagName,num)=>new Aq({el:tagName,many:num});
-const $el=(el)=>new Aq({el})
-const $many=(el)=>new Aq({el,many:true})
+const $new=(tagName,num)=>new Aq({el:tagName,num});
 
-const $=(query)=>new Aq({query});
-const $$$=(query)=>new Aq({query,many:true})
+const $el=(el)=>new Aq({el})
+
+const $=(query,element_to_query)=>new Aq({query,parent:element_to_query});
 
 Aq.init_style_defaults()
