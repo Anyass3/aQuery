@@ -81,8 +81,8 @@ if many elments use `$many`
                  else returns true if atleast an element has the class
                 someClass is a similar logic like someEl
 ```
-// let say there are elements/anchors with a data-toggle="modal" and a data-target property that is equal to a query to toggle
-// like how bootstrap declares its modals
+###### let say there are elements/anchors with a data-toggle="modal" and a data-target property that is equal to a query to toggle
+###### like how bootstrap declares its modals
 ```
 $$$("[data-toggle=modal]").on('click',(e)=>$(`${$el(e.target).attr("data-target")}`).toggleClass("show"))
 
@@ -99,7 +99,7 @@ getting or setting properties or attributes
  .attr('id','hmm')//to SET id to hmm : setting single =>SAME for prop
  .rmAttr('id') // to remove/del an attr
 ```
-attrs functions similar to props but different
+###### attrs functions similar to props but different
 `attr('id') and .prop('id') gives the same result`
 but `.attr('style')` returns the style string and `.prop('style')` returns the style object
 
@@ -135,24 +135,26 @@ $("div#main").$$$("p").on('mouseover',e=>console.log(e)).on('click',func).prop('
 
 ### others
 
-.run //this will run a func for all or the element queried
+###### .run //this will run a func for all or the element queried
         eg: .run(func) || .run(e=>{})
  
-.$run //this will run a func for all or the element queried against a variable or array
+###### .$run //this will run a func for all or the element queried against a variable or array
         eg: .$run(func,arr) || $run((e,var||array_item)=>{},var||array)
-.append // to append a child node/element
-.appendParent // to append to a parent node/element
-.detach // to detach or remove a child node/element
-.detachParent // to detach self from a parent node/element
+###### .append // to append a child node/element
+###### .appendParent // to append to a parent node/element
+###### .detach // to detach or remove a child node/element
+###### .detachParent // to detach self from a parent node/element
 
-.html //to get or set the innerHTML
-.text //to get or set the textContent
-.val //to get or set form inputs or textarea or files or checkboxes or radios etc
+###### .html //to get or set the innerHTML
+###### .text //to get or set the textContent
+###### .val //to get or set form inputs or textarea or files or checkboxes or radios etc
     //you do not need to think whether it is .value or .checked or .files etc. it will do the job for you
-    //NOTE: NOT ALL INPUT TYPES CAN BE SET
- .children // to get children nodes
- .parent // to get an element/node's parent
- .parents // similar to .parent but usefull querySelectorAll/$$$
+    
+    NOTE: NOT ALL INPUT TYPES CAN BE SET
+    
+######  .children // to get children nodes
+######  .parent // to get an element/node's parent
+######  .parents // similar to .parent but usefull querySelectorAll/$$$
  
 ##### Get a form data without hussle
 ```
