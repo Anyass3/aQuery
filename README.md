@@ -81,7 +81,7 @@ use `.$$`
 .hasClass(cls,{someClass=false,someEl=false}) # default
         eg: .hasClass('d-none') // checking a single class
             .hasClass("class1, class1",{someClass=false,someEl=false})
-                someEl will be useful if you queried many elements in an instance od Aq
+                someEl will be useful if you queried many elements in an instance of Aq
                  if false returns true only if all the elements have the class
                  else returns true if atleast an element has the class
                 someClass is a similar logic like someEl
@@ -92,7 +92,7 @@ getting or setting properties or attributes
 .prop //to get or set any property 
 .attr //to get or set any attributes. 
 
- to GET multiple pass in a list of attrs eg: .attr('attr1,attr2,etc']) || .prop('prop1,prop2,etc')
+ to GET multiple pass in a list of attrs eg: .attr('attr1,attr2,etc') || .prop('prop1,prop2,etc')
  to SET multiple attrs pass in an object eg: .attr({id:'man',etc}) || prop({width:'56px',etc})
  .attr('id')//to GET a single =>SAME for prop
  .attr('id','hmm')//to SET id to hmm : setting single =>SAME for prop
