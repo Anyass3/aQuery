@@ -1,4 +1,4 @@
-# abQuery v 0.2.0
+# abQuery v 0.2.1
 ### Re-designing JQuery : If you are like me, you hate large js libraries 
 ##### this is minimal library similar to Jquery in some ways with somewhat fewer features but amazing
 ### This was a personal mini project to help me code js faster. If interested you can try it. 
@@ -9,7 +9,7 @@
 # Installation
 `npm i abquery --save`
 ## To get started quickly try the CDN instead:
-[https://cdn.jsdelivr.net/npm/abquery@0.2.0/dist/query.min.js]
+[https://cdn.jsdelivr.net/npm/abquery@0.2.1/dist/query.min.js]
 
 
 #### `Aq` is the main class object
@@ -55,7 +55,7 @@ let div=$('div')
 let anchors=$new('a',10)
 anchors.appendParent(div.$$) || div.append(anchors.$$)
 ```
-#### existing elements
+### existing elements
 ```
 $el(el)
 # usages example
@@ -81,7 +81,7 @@ use `.$$`
 .hasClass(cls,{someClass=false,someEl=false}) # default
         eg: .hasClass('d-none') // checking a single class
             .hasClass("class1, class1",{someClass=false,someEl=false})
-                someEl will be useful if you queried many elements in an instance od Aq
+                someEl will be useful if you queried many elements in an instance of Aq
                  if false returns true only if all the elements have the class
                  else returns true if atleast an element has the class
                 someClass is a similar logic like someEl
@@ -92,7 +92,7 @@ getting or setting properties or attributes
 .prop //to get or set any property 
 .attr //to get or set any attributes. 
 
- to GET multiple pass in a list of attrs eg: .attr('attr1,attr2,etc']) || .prop('prop1,prop2,etc')
+ to GET multiple pass in a list of attrs eg: .attr('attr1,attr2,etc') || .prop('prop1,prop2,etc')
  to SET multiple attrs pass in an object eg: .attr({id:'man',etc}) || prop({width:'56px',etc})
  .attr('id')//to GET a single =>SAME for prop
  .attr('id','hmm')//to SET id to hmm : setting single =>SAME for prop
@@ -115,8 +115,11 @@ NB: this has notthing to do with this mini library, thant's how js works
 ```
 ### eventListeners
 `.on('click', func)` //single listener
+
 `.on("mouseover, mouseout, click", func)` // multiple listeners
+
 You can also write it like this: `.on(['mouseover','mouseout','click'], func)`
+
 ### dealing with styles
 ```
 .css('width')//to get the width
@@ -160,7 +163,7 @@ $("div#main").$("*p").on('mouseover',e=>console.log(e)).on('click',func).prop('o
 $("form").$("* input, select, textarea").val //this will return an object which can directly be sent to the server
 #### NOTE: the inputs should have a name or id attrs SET eg: input type file, can only be set/added by a user interraction
 ```
-#### hide and modal eg:
+#### hide and show modals eg:
 ###### let say there are elements/anchors with a data-toggle="modal" and a data-target property that is equal to a query to toggle
 ###### like how bootstrap declares its modals
 ```
