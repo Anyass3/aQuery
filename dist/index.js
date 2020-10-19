@@ -617,9 +617,3 @@ window.$new = _$new;
 window.$el = $el;
 window.$ = _$;
 window.Aq = _$;
-module.exports = {
-  Aq: Aq,
-  $: _$,
-  $new: _$new,
-  $el: $el
-};

@@ -333,5 +333,3 @@ window.$el=$el;
 window.$=$;
 window.Aq=$;
 
-
-module.exports = {Aq, $, $new, $el}
