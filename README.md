@@ -22,7 +22,7 @@ you can use it only with the js new keyword except when accessing the static met
 ## getting started using npm:
 ##### import what you need
 `import {Aq, $, $$$, $new, $el, $many} from "abquery"`
-or
+##### or
 `const {Aq, $, $$$, $new, $el, $many} = require("abquery")` 
 
 ### NOTE: for some hide and show features you have to run this:
