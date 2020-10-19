@@ -69,9 +69,17 @@ if many elments use `$many`
 .addClass(cls)
 .rmClass(cls)
 .toggleClass(cls)
+
 .class //this will get the className of all the anchors
 .class="btn-link d-none" //this will set the className of all the anchors
 
+.hasClass(cls,{someClass=false,someEl=false}) # default
+        eg: .hasClass('d-none') // checking a single class
+            .hasClass(['class1','class1'],{someClass=false,someEl=false})
+                someEl will be useful if you queried many elements in an instance od Aq
+                 if false returns true only if all the elements have the class
+                 else returns true if atleast an element has the class
+                someClass is a similar logic like someEl
 ```
 // let say there are elements/anchors with a data-toggle="modal" and a data-target property that is equal to a query to toggle
 // like how bootstrap declares its modals
@@ -117,13 +125,6 @@ NB: this has notthing to do with this mini library, thant's how js works
 .css('width','100%',true) //to set it as important
 .css(['margin-top','height','display']) //to get those values
 .css({width:"100%",display:"flex !important"})// to set it
-.hasClass(cls,{someClass=false,someEl=false}) # default
-        eg: .hasClass('d-none') // checking a single class
-            .hasClass(['class1','class1'],{someClass=false,someEl=false})
-                someEl will be useful if you queried many elements in an instance od Aq
-                 if false returns true only if all the elements have the class
-                 else returns true if atleast an element has the class
-                someClass is a similar logic like someEl
 ```
 ### to add a new element or new query to a query or any instance of Aq
 ```
