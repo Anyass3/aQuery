@@ -55,7 +55,7 @@ anchors.appendParent(div.$$) || div.append(anchors.$$)
 #### existing elements
 ```
 $el(el)
-# usages
+# usages example
 $$$('div').on('click',(ev)=>{
         ev // this is a click event
         let e=ev.target // to get the actual element
