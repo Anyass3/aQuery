@@ -46,6 +46,12 @@ $$$(['a','.nav-link']) // select all _a_ tags and .nav-link in one instance
 $new('a')
 $new('a',many=false) default
 ```
+##### eg: create 10 anchor tags and append it to a div
+```
+let div=$('div')
+let anchors=$new('a',10)
+anchors.appendParent(div.$$) || div.append(anchors.$$)
+```
 ### existing elements
 ```
 $el(el)
@@ -58,12 +64,6 @@ $$$('div').on('click',(ev)=>{
 ```
 if many elments use `$many`
 
-# create 10 anchor tags and append it to a div
-```
-let div=$('div')
-let anchors=$new('a',10)
-anchors.appendParent(div.$$) || div.append(anchors.$$)
-```
 ### classes
 ```
 .addClass(cls)
@@ -110,21 +110,6 @@ NB: this has notthing to do with this mini library, thant's how js works
 `.on('click', func)` //single listener
 `.on(['mouseover','mouseout','click'], func)` // multiple listeners
 
-### others
-```
-.run //this will run a func for all or the element queried
-        eg: .run(func) || .run(e=>{})
- 
-.$run //this will run a func for all or the element queried against a variable or array
-        eg: .$run(func,arr) || $run((e,var||array_item)=>{},var||array)
-```
-
-.html //to get or set the innerHTML
-.text //to get or set the textContent
-.val //to get or set form inputs or textarea or files or checkboxes or radios etc
-    //you do not need to think whether it is .value or .checked or .files etc. it will do the job for you
-    //NOTE: NOT ALL INPUT TYPES CAN BE SET
-```
 ### dealing with styles
 ```
 .css('width')//to get the width
@@ -132,6 +117,13 @@ NB: this has notthing to do with this mini library, thant's how js works
 .css('width','100%',true) //to set it as important
 .css(['margin-top','height','display']) //to get those values
 .css({width:"100%",display:"flex !important"})// to set it
+.hasClass(cls,{someClass=false,someEl=false}) # default
+        eg: .hasClass('d-none') // checking a single class
+            .hasClass(['class1','class1'],{someClass=false,someEl=false})
+                someEl will be useful if you queried many elements in an instance od Aq
+                 if false returns true only if all the elements have the class
+                 else returns true if atleast an element has the class
+                someClass is a similar logic like someEl
 ```
 ### to add a new element or new query to a query or any instance of Aq
 ```
@@ -139,7 +131,28 @@ $("div#main").$new('p').text='this a new paragraph'
 $("div#main").$('p').run(e=>console.log(e))
 $("div#main").$$$("p").on('mouseover',e=>console.log(e)).on('click',func).prop('offsetWidth') // to querySelcetorAll p tags in the div
 ```
-## You can check the code to see the other methods
+
+### others
+
+.run //this will run a func for all or the element queried
+        eg: .run(func) || .run(e=>{})
+ 
+.$run //this will run a func for all or the element queried against a variable or array
+        eg: .$run(func,arr) || $run((e,var||array_item)=>{},var||array)
+.append // to append a child node/element
+.appendParent // to append to a parent node/element
+.detach // to detach or remove a child node/element
+.detachParent // to detach self from a parent node/element
+
+.html //to get or set the innerHTML
+.text //to get or set the textContent
+.val //to get or set form inputs or textarea or files or checkboxes or radios etc
+    //you do not need to think whether it is .value or .checked or .files etc. it will do the job for you
+    //NOTE: NOT ALL INPUT TYPES CAN BE SET
+ .children // to get children nodes
+ .parent // to get an element/node's parent
+ .parents // similar to .parent but usefull querySelectorAll/$$$
+ 
 ##### Get a form data without hussle
 ```
 $("form").$$$(["input","select","textarea"]).val //this will return an object which can directly be sent to the server
@@ -179,6 +192,7 @@ Aq.add_style(selector,rules,id=Aq.styleElementId)
             
             Now you can use that class in your elements
 ```
+## You can check the code to see the methods
 !!!ENJOY
 ### more to come
 Like modal time-ago tooltips fetch etc
