@@ -153,7 +153,7 @@ $("div#main").$$$("p").on('mouseover',e=>console.log(e)).on('click',func).prop('
 ##### Get a form data without hussle
 ```
 $("form").$$$(["input","select","textarea"]).val //this will return an object which can directly be sent to the server
-## NOTE: the inputs should have a name or id attrs set
+#### NOTE: the inputs should have a name or id attrs SET eg: input type file, can only be set/added by a user interraction
 ```
 #### hide and modal eg:
 ###### let say there are elements/anchors with a data-toggle="modal" and a data-target property that is equal to a query to toggle
