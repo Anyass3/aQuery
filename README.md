@@ -41,7 +41,7 @@ $$$('a')
 $$$(['a','.nav-link']) // select all _a_ tags and .nav-link in one instance
 .$$ // will return a node list
 ```
-### new element
+#### create new element
 ```
 $new('a')
 $new('a',many=false) default
