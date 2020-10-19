@@ -18,7 +18,7 @@ class Aq {
                     },[]);this.many=true;
             }else this.$$=queryer(query);
         }else{
-            if(num>1||Aq.is_array(el))this.many=true;
+            if(num>1||Aq.is_array(el)) this.many=true;
             if(Aq.is_html(el))this.$$=el;
             else{
                 if(num>1)
@@ -261,7 +261,7 @@ class Aq {
         if(!Aq.is_array(inputs))inputs=[inputs];
         return inputs.reduce((dict,e)=>{
             let data=Aq.form_value(e)
-            if(data===null||e.type==="submit")return {...dict}
+            if(data===null||e.type==="submit")return dict;
             return {...dict,[e.name||e.id]:data}
         },{})
         
@@ -327,6 +327,11 @@ const $new=(tagName,num)=>new Aq({el:tagName,num});
 const $el=(el)=>new Aq({el})
 
 const $=(query,element_to_query)=>new Aq({query,parent:element_to_query});
+
+window.$new = $new;
+window.$el=$el;
+window.$=$;
+window.Aq=$;
 
 
 module.exports = {Aq, $, $new, $el}
