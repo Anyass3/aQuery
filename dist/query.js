@@ -47,7 +47,7 @@ class Aq {
     }
     toggleDisplay({cls=''}={}){
         return this.run((el)=>{
-            if ($old(el).hasClass(!cls ? ['abquery-d-none','d-none']:cls,{someClass:true})){
+            if ($el(el).hasClass(!cls ? ['abquery-d-none','d-none']:cls,{someClass:true})){
                 this.show({cls})
             }else{
                 this.hide({cls})
@@ -179,7 +179,7 @@ class Aq {
     }
     get parent(){
         //returns first child parent
-        return $old(this.arr[0].parentNode)
+        return $el(this.arr[0].parentNode)
     }
     get parents(){
         let arr=Array.from(this.arr.reduce((set,e)=>{
@@ -188,7 +188,7 @@ class Aq {
     ; return $many(arr)
     }
     get child(){//needs improvement
-        return $old(this.arr[0].childNodes[0])
+        return $el(this.arr[0].childNodes[0])
     }
     get children(){
         let children=[]
@@ -221,7 +221,7 @@ class Aq {
             let el = new Aq({query,parent:e})
             els.push(el.$$);
         })
-        return els.length===1 ? $old(els[0]):$many(els)
+        return els.length===1 ? $el(els[0]):$many(els)
     }
     $$$(query){
         let els=[];
@@ -323,7 +323,7 @@ class Aq {
 
 }
 const $new=(tagName,num)=>new Aq({el:tagName,many:num});
-const $old=(el)=>new Aq({el})
+const $el=(el)=>new Aq({el})
 const $many=(el)=>new Aq({el,many:true})
 
 const $=(query)=>new Aq({query});

@@ -16,12 +16,14 @@ you can use it only with the js new keyword except when accessing the static met
 #### `$` is similar to `document.querySelector` but with the Aq instance
 #### `$$$` is similar to `document.querySelectorAll` but with the Aq instance
 #### `$new` it's used to create a html element with the Aq instance
-#### `$old` useful when you want an element to have an Aq instance as it has useful methods
-#### `$many` it the plural of `$old`
+#### `$el` useful when you want an element to have an Aq instance as it has useful methods
+#### `$many` it the plural of `$el`
 
 ## getting started using npm:
 ##### import what you need
-`import {Aq, $, $$$, $new, $old, $many} from "abquery"`
+`import {Aq, $, $$$, $new, $el, $many} from "abquery"`
+or
+`const {Aq, $, $$$, $new, $el, $many} = require("abquery")` 
 
 ### NOTE: for some hide and show features you have to run this:
 this is only for npm, for the cdn no need
@@ -59,7 +61,7 @@ anchors.toggleClass
 // let say there are elements/anchors with a data-toggle="modal" and a data-target property that is equal to a query to toggle
 // like how bootstrap declares its modals
 ```
-$$$("[data-toggle=modal]").on('click',(e)=>$(`${$old(e.target).attr("data-target")}`).toggleClass("show"))
+$$$("[data-toggle=modal]").on('click',(e)=>$(`${$el(e.target).attr("data-target")}`).toggleClass("show"))
 
 ```
 ### here are some cool methods and properties

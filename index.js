@@ -47,7 +47,7 @@ class Aq {
     }
     toggleDisplay({cls=''}={}){
         return this.run((el)=>{
-            if ($old(el).hasClass(!cls ? ['abquery-d-none','d-none']:cls,{someClass:true})){
+            if ($el(el).hasClass(!cls ? ['abquery-d-none','d-none']:cls,{someClass:true})){
                 this.show({cls})
             }else{
                 this.hide({cls})
@@ -73,9 +73,9 @@ class Aq {
     toggleClass(cls){
         return this.$run((e,c)=>{
             e.classList.toggle(c);
-        },cls); 
+        },cls);
     }
-    
+
     on(events,func){
         return this.$run((e,event)=>{
             e.addEventListener(event,func);
@@ -101,7 +101,7 @@ class Aq {
             if (Aq.is_array(props)||val===undefined)
                 return e.getAttribute(prop);
             e.setAttribute(prop, val);
-        },props,value); 
+        },props,value);
     }
     rmAttr(props){
         return this.run((e)=>{
@@ -138,7 +138,7 @@ class Aq {
     }
     $run(func,arr){
         if (!Aq.is_array(arr)) arr=[arr]
-        arr.forEach(i=>this.run(e=>func(e,i))); 
+        arr.forEach(i=>this.run(e=>func(e,i)));
         return this
     }
     $runBool(func,arr,{someArr=false,someEl=false}={}){
@@ -179,7 +179,7 @@ class Aq {
     }
     get parent(){
         //returns first child parent
-        return $old(this.arr[0].parentNode)
+        return $el(this.arr[0].parentNode)
     }
     get parents(){
         let arr=Array.from(this.arr.reduce((set,e)=>{
@@ -188,7 +188,7 @@ class Aq {
     ; return $many(arr)
     }
     get child(){//needs improvement
-        return $old(this.arr[0].childNodes[0])
+        return $el(this.arr[0].childNodes[0])
     }
     get children(){
         let children=[]
@@ -221,7 +221,7 @@ class Aq {
             let el = new Aq({query,parent:e})
             els.push(el.$$);
         })
-        return els.length===1 ? $old(els[0]):$many(els)
+        return els.length===1 ? $el(els[0]):$many(els)
     }
     $$$(query){
         let els=[];
@@ -264,7 +264,7 @@ class Aq {
             if(data===null||e.type==="submit")return {...dict}
             return {...dict,[e.name||e.id]:data}
         },{})
-        
+
     }
     static form_value(e,key=false){
         if(e.tagName==="INPUT"||e.tagName==="TEXTAREA"){
@@ -323,11 +323,11 @@ class Aq {
 
 }
 const $new=(tagName,num)=>new Aq({el:tagName,many:num});
-const $old=(el)=>new Aq({el})
+const $el=(el)=>new Aq({el})
 const $many=(el)=>new Aq({el,many:true})
 
 const $=(query)=>new Aq({query});
 const $$$=(query)=>new Aq({query,many:true})
 
 
-export {Aq,$,$$$,$new,$old,$many}
+module.exports = {Aq,$,$$$,$new,$el,$many}
