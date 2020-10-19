@@ -13,11 +13,11 @@
 This is the main library
 you can use it only with the js new keyword except when accessing the static methods
 
-#### `$` is similar to `document.querySelector` but with the Aq instance
-#### `$$$` is similar to `document.querySelectorAll` but with the Aq instance
-#### `$new` it's used to create a html element with the Aq instance
-#### `$el` useful when you want an element to have an Aq instance as it has useful methods
-#### `$many` it the plural of `$el`
+##### `$` is similar to `document.querySelector` but with the Aq instance
+##### `$$$` is similar to `document.querySelectorAll` but with the Aq instance
+##### `$new` it's used to create a html element with the Aq instance
+##### `$el` useful when you want an element to have an Aq instance as it has useful methods
+##### `$many` it the plural of `$el`
 
 ## getting started using npm:
 ##### import what you need
@@ -29,19 +29,19 @@ you can use it only with the js new keyword except when accessing the static met
 this is only for npm, for the cdn no need
 `Aq.init_style_defaults()`
 
-#### query selector
+### query selector
 ```
 $("a")
 $("a").$$ // ths will get the actual element 
 $(['a','#navlink','p']) //this queries each of those selectors in one instance
 ```
-#### query selectorAll
+### query selectorAll
 ```
 $$$('a')
 $$$(['a','.nav-link']) // select all _a_ tags and .nav-link in one instance
 .$$ // will return a node list
 ```
-#### create new element
+### create new element
 ```
 $new('a')
 $new('a',many=false) default
@@ -52,7 +52,7 @@ let div=$('div')
 let anchors=$new('a',10)
 anchors.appendParent(div.$$) || div.append(anchors.$$)
 ```
-### existing elements
+#### existing elements
 ```
 $el(el)
 # usages
@@ -64,7 +64,7 @@ $$$('div').on('click',(ev)=>{
 ```
 if many elments use `$many`
 
-### classes
+#### classes
 ```
 .addClass(cls)
 .rmClass(cls)
@@ -80,12 +80,6 @@ if many elments use `$many`
                  if false returns true only if all the elements have the class
                  else returns true if atleast an element has the class
                 someClass is a similar logic like someEl
-```
-###### let say there are elements/anchors with a data-toggle="modal" and a data-target property that is equal to a query to toggle
-###### like how bootstrap declares its modals
-```
-$$$("[data-toggle=modal]").on('click',(e)=>$(`${$el(e.target).attr("data-target")}`).toggleClass("show"))
-
 ```
 ## here are some cool methods and properties
 getting or setting properties or attributes
@@ -105,7 +99,7 @@ but `.attr('style')` returns the style string and `.prop('style')` returns the s
 
 NB: this has notthing to do with this mini library, thant's how js works
 
-#### hiding and showing elements
+### hiding and showing elements
 ```
 .hide() .show() // it does just that
   it can accept params
@@ -160,6 +154,13 @@ $("div#main").$$$("p").on('mouseover',e=>console.log(e)).on('click',func).prop('
 ```
 $("form").$$$(["input","select","textarea"]).val //this will return an object which can directly be sent to the server
 ## NOTE: the inputs should have a name or id attrs set
+```
+#### hide and modal eg:
+###### let say there are elements/anchors with a data-toggle="modal" and a data-target property that is equal to a query to toggle
+###### like how bootstrap declares its modals
+```
+$$$("[data-toggle=modal]").on('click',(e)=>$(`${$el(e.target).attr("data-target")}`).toggleClass("show"))
+
 ```
 ### some useful static methods
 ```
