@@ -41,22 +41,37 @@ $$$('a')
 $$$(['a','.nav-link']) // select all _a_ tags and .nav-link in one instance
 .$$ // will return a node list
 ```
-#### new element
+### new element
 ```
 $new('a')
 $new('a',many=false) default
+```
+### existing elements
+```
+$el(el)
+# usages
+$$$('div').on('click',(ev)=>{
+        ev // this is a click event
+        let e=ev.target // to get the actual element
+        $el(e).toggleClass(['class1','class2',etc]).show().attr('id','IDname')
+})
+```
+if many elments use `$many`
 
-#create 10 anchor tags and append it to a div
-
+# create 10 anchor tags and append it to a div
+```
 let div=$('div')
 let anchors=$new('a',10)
 anchors.appendParent(div.$$) || div.append(anchors.$$)
-anchors.addClass('d-none')
-anchors.addclass(['d-none','btn', 'btn-link'])
-anchors.class //this will get the className of all the anchors
-anchors.class="btn-link d-none" //this will set the className of all the anchors
-anchors.rmClass('d-none')
-anchors.toggleClass
+```
+### classes
+```
+.addClass(cls)
+.rmClass(cls)
+.toggleClass(cls)
+.class //this will get the className of all the anchors
+.class="btn-link d-none" //this will set the className of all the anchors
+
 ```
 // let say there are elements/anchors with a data-toggle="modal" and a data-target property that is equal to a query to toggle
 // like how bootstrap declares its modals
@@ -64,17 +79,45 @@ anchors.toggleClass
 $$$("[data-toggle=modal]").on('click',(e)=>$(`${$el(e.target).attr("data-target")}`).toggleClass("show"))
 
 ```
-### here are some cool methods and properties
+## here are some cool methods and properties
+getting or setting properties or attributes
 ```
-.run //this will run a func for all element queried
 .prop //to get or set any property 
-.attr //to get or set any attributes. to get multiple attrs pass in a list of attrs
-        // to set multiple attrs pass in an object
-    .attr('id')//to get 
-    .attr('id','hmm')//to set id to hmm
-    .rmAttr('id')// to remove/del an attr
-    #attrs functions similar to prop
-.hide .show .toggleDisplay #these are self explainatory
+.attr //to get or set any attributes. 
+
+ to GET multiple pass in a list of attrs eg: .attr(['attr1','attr2',etc]) || .prop(['prop1','prop2',etc])
+ to SET multiple attrs pass in an object eg: .attr({id:'man',etc}) || prop({width:'56px',etc})
+ .attr('id')//to GET a single =>SAME for prop
+ .attr('id','hmm')//to SET id to hmm : setting single =>SAME for prop
+ .rmAttr('id') // to remove/del an attr
+```
+attrs functions similar to props but different
+`attr('id') and .prop('id') gives the same result`
+but `.attr('style')` returns the style string and `.prop('style')` returns the style object
+
+NB: this has notthing to do with this mini library, thant's how js works
+
+#### hiding and showing elements
+```
+.hide() .show() // it does just that
+  it can accept params
+    ({cls='class-to-show-or-hide',animate='your-animate-class',delay=600,keep=false}={},func_to_run_after)
+       delay is the delay time
+       keep if true the animate class will be kept else it will be remove after
+.toggleDisplay() // it does just that
+```
+### eventListeners
+`.on('click', func)` //single listener
+`.on(['mouseover','mouseout','click'], func)` // multiple listeners
+
+### others
+```
+.run //this will run a func for all or the element queried
+        eg: .run(func) || .run(e=>{})
+ 
+.$run //this will run a func for all or the element queried against a variable or array
+        eg: .$run(func,arr) || $run((e,var||array_item)=>{},var||array)
+```
 
 .html //to get or set the innerHTML
 .text //to get or set the textContent
