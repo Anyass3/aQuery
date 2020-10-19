@@ -616,4 +616,4 @@ var _$ = function _$(query, element_to_query) {
 window.$new = _$new;
 window.$el = $el;
 window.$ = _$;
-window.Aq = _$;
+window.Aq = Aq;
