@@ -94,9 +94,9 @@ class Aq {
         },props,value);
     }
     rmCss(props){
-        return this.run((e)=>{
-        e.style.removeProperty(props);
-    });}
+        return this.$run((e,prop)=>{
+        e.style.removeProperty(prop);
+    },props)}
     attr(props,value){
         return this.$set((e,prop,val)=>{
             if (Aq.is_array(Aq.clean(props))||val===undefined)
@@ -105,9 +105,9 @@ class Aq {
         },props,value); 
     }
     rmAttr(props){
-        return this.run((e)=>{
-            e.removeAttribute(props);
-        });
+        return this.$run((e,prop)=>{
+            e.removeAttribute(prop);
+        },props)
     }
     appendParent(nodes){
         return this.$run((e,node)=>{
@@ -138,6 +138,7 @@ class Aq {
         return this;
     }
     $run(func,arr){
+        arr=Aq.clean(arr)
         if (!Aq.is_array(arr)) arr=[arr]
         arr.forEach(i=>this.run(e=>func(e,i))); 
         return this
@@ -250,7 +251,7 @@ class Aq {
         return str
     }
     static clean(q,m=false){
-        if(typeof(q)!=="string")return q; q=q.trim();
+        if(typeof(q)!=="string")return q;
         let all=false;if(q[0]==="*"){q=q.slice(1);all=true};
         q=q.split(',').reduce((arr,q)=>{return[...arr,q.trim()]},[]);
         q=q.length===1?q[0]:q
