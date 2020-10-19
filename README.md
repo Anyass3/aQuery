@@ -3,6 +3,9 @@
 ##### this is minimal library similar to Jquery in some ways with somewhat fewer features but amazing
 ### This was a personal mini project to help me code js faster. If interested you can try it. 
 
+## Prerequisites:
+` just a basic javascript knowledge`
+
 # Installation
 `npm i abquery --save`
 ## To get started quickly try the CDN instead:
