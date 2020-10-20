@@ -9,7 +9,7 @@
 # Installation
 `npm i abquery --save`
 ## To get started quickly try the CDN instead:
-#### compiled with babel for browser older compatibility
+#### compiled with babel for browser compatibility
 [https://cdn.jsdelivr.net/npm/abquery@0.2.22/dist/index.min.js]
 
 
@@ -206,6 +206,9 @@ Aq.add_style(selector,rules,id=Aq.styleElementId)
             Now you can use that class in your elements
 ```
 ## You can check the code to see the methods
+`src/index.js`
+The compiled version `dist/index.js` and `dist/index.min.js`
+
 ### NOTE:
 ```
 multiple selectors eg:- $("#nav, a, etc") can ONLY be strings separated by commas.
