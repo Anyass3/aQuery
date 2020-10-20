@@ -207,6 +207,7 @@ Aq.add_style(selector,rules,id=Aq.styleElementId)
 ```
 ## You can check the code to see the methods
 `src/index.js`
+
 The compiled version `dist/index.js` and `dist/index.min.js`
 
 ### NOTE:
