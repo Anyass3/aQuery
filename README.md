@@ -29,7 +29,7 @@ It can a NodeList or an element or even a list/array of  elements
 ##### or
 `const {Aq, $, $new, $el} = require("abquery")` 
 
-### NOTE: for some hide and show features you have to run this:
+### NOTE: for some hide and show animation features you have to run this:
 this is only for npm, for the cdn no need
 `Aq.init_style_defaults()`
 
