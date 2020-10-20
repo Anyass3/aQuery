@@ -9,7 +9,7 @@
 # Installation
 `npm i abquery --save`
 ## To get started quickly try the CDN instead:
-#### compiled with babel for browser older compatibility
+#### compiled with babel for browser compatibility
 [https://cdn.jsdelivr.net/npm/abquery@0.2.22/dist/index.min.js]
 
 
@@ -29,7 +29,7 @@ It can a NodeList or an element or even a list/array of  elements
 ##### or
 `const {Aq, $, $new, $el} = require("abquery")` 
 
-### NOTE: for some hide and show features you have to run this:
+### NOTE: for some hide and show animation features you have to run this:
 this is only for npm, for the cdn no need
 `Aq.init_style_defaults()`
 
@@ -79,7 +79,7 @@ use `.$$`
 .class //this will get the className of all the anchors
 .class="btn-link d-none" //this will set the className of all the anchors
 
-.hasClass(cls,{someClass=false,someEl=false}) # default
+.hasClass(cls,{someClass: false, someEl: false}) # default
         eg: .hasClass('d-none') // checking a single class
             .hasClass("class1, class1",{someClass=false,someEl=false})
                 someEl will be useful if you queried many elements in an instance of Aq
@@ -206,6 +206,10 @@ Aq.add_style(selector,rules,id=Aq.styleElementId)
             Now you can use that class in your elements
 ```
 ## You can check the code to see the methods
+`src/index.js`
+
+The compiled version `dist/index.js` and `dist/index.min.js`
+
 ### NOTE:
 ```
 multiple selectors eg:- $("#nav, a, etc") can ONLY be strings separated by commas.
