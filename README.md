@@ -79,7 +79,7 @@ use `.$$`
 .class //this will get the className of all the anchors
 .class="btn-link d-none" //this will set the className of all the anchors
 
-.hasClass(cls,{someClass=false,someEl=false}) # default
+.hasClass(cls,{someClass: false, someEl: false}) # default
         eg: .hasClass('d-none') // checking a single class
             .hasClass("class1, class1",{someClass=false,someEl=false})
                 someEl will be useful if you queried many elements in an instance of Aq
