@@ -89,7 +89,7 @@ class Aq {
                 return e.style.getPropertyValue(prop)
                 //e.style.cssText=Aq.obj_text(props,e.style.cssText);
             else{
-            const [v,imp]=split(val)
+            const [v,imp]=typeof(val)==='number'?[val,false]:split(val)
             e.style.setProperty(prop,v,imp ? 'important':'');}
         },props,value);
     }

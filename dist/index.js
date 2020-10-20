@@ -216,10 +216,10 @@ var Aq = /*#__PURE__*/function () {
       return this.$set(function (e, prop, val) {
         if (Aq.is_array(Aq.clean(props)) || val === undefined) return e.style.getPropertyValue(prop); //e.style.cssText=Aq.obj_text(props,e.style.cssText);
         else {
-            var _split = split(val),
-                _split2 = _slicedToArray(_split, 2),
-                v = _split2[0],
-                _imp = _split2[1];
+            var _ref6 = typeof val === 'number' ? [val, false] : split(val),
+                _ref7 = _slicedToArray(_ref6, 2),
+                v = _ref7[0],
+                _imp = _ref7[1];
 
             e.style.setProperty(prop, v, _imp ? 'important' : '');
           }
@@ -279,11 +279,11 @@ var Aq = /*#__PURE__*/function () {
   }, {
     key: "run",
     value: function run(func) {
-      var _ref6 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-          _ref6$delay = _ref6.delay,
-          delay = _ref6$delay === void 0 ? 0 : _ref6$delay,
-          _ref6$every = _ref6.every,
-          every = _ref6$every === void 0 ? 0 : _ref6$every;
+      var _ref8 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+          _ref8$delay = _ref8.delay,
+          delay = _ref8$delay === void 0 ? 0 : _ref8$delay,
+          _ref8$every = _ref8.every,
+          every = _ref8$every === void 0 ? 0 : _ref8$every;
 
       var arr = this.arr;
       if (!!every) setInterval(function () {
@@ -312,11 +312,11 @@ var Aq = /*#__PURE__*/function () {
     value: function $runBool(func, arr) {
       var _this5 = this;
 
-      var _ref7 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-          _ref7$someArr = _ref7.someArr,
-          someArr = _ref7$someArr === void 0 ? false : _ref7$someArr,
-          _ref7$someEl = _ref7.someEl,
-          someEl = _ref7$someEl === void 0 ? false : _ref7$someEl;
+      var _ref9 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+          _ref9$someArr = _ref9.someArr,
+          someArr = _ref9$someArr === void 0 ? false : _ref9$someArr,
+          _ref9$someEl = _ref9.someEl,
+          someEl = _ref9$someEl === void 0 ? false : _ref9$someEl;
 
       // returns a boolean
       if (!Aq.is_array(arr)) arr = [arr];
