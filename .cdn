@@ -1,0 +1,5 @@
+window.$new = $new;
+window.$el=$el;
+window.$=$;
+window.Aq=Aq;
+Aq.init_style_defaults()

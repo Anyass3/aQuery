@@ -328,10 +328,4 @@ const $el=(el)=>new Aq({el})
 
 const $=(query,element_to_query)=>new Aq({query,parent:element_to_query});
 
-window.$new = $new;
-window.$el=$el;
-window.$=$;
-window.Aq=Aq;
-
-
 module.exports = {Aq, $, $new, $el}

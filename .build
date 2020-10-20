@@ -1,0 +1,17 @@
+touch temp.js
+echo "Created temp.js"
+
+head -n -1 src/index.js > temp.js
+echo "Copied index.js to excluding the last line temp.js"
+
+cat .cdn >> temp.js 
+echo "Added .cdn text to temp.js"
+
+babel temp.js --out-file dist/index.js
+echo "Compiled temp.js to dist/index.js with babel"
+
+babel dist/index.js --presets minify --out-file dist/index.min.js --no-comments
+echo "Minified dist/index.js to dist/index.min.js"
+
+rm temp.js
+echo "removed temp.js"

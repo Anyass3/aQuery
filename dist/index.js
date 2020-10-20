@@ -617,3 +617,4 @@ window.$new = _$new;
 window.$el = $el;
 window.$ = _$;
 window.Aq = Aq;
+Aq.init_style_defaults();
