@@ -10,7 +10,7 @@
 `npm i abquery --save`
 ## To get started quickly try the CDN instead:
 #### compiled with babel for browser compatibility
-[https://cdn.jsdelivr.net/npm/abquery@0.2.23/dist/index.min.js]
+[https://cdn.jsdelivr.net/npm/abquery@0.2.24/dist/index.min.js]
 
 
 #### `Aq` is the main class object
