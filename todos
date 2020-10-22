@@ -1,0 +1,6 @@
+change $el,Aq,$new,$ => $
+add .ready DOMContentLoaded
+add .len  > .arr.lenght
+add .index > .arr.index_of
+add $() as document  
+$(func) => .ready(func)
