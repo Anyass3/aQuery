@@ -363,7 +363,6 @@ const $ = (query,arg) => {
     $.id =(q)=>$(`#${q}`)
     $.cls =(q)=>$(`*.${q}`)
     $.att =(q)=>$(`*[${q}]`)
-    //end
-    // $.init_style_defaults()
-    // export const $.new
+
+    
     module.exports = $

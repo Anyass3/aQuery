@@ -129,7 +129,8 @@ You can also write it like this: `.on(['mouseover','mouseout','click'], func)`
 .css({width:"100%",display:"flex !important"})// to set it
 ```
 ### to add a new element or new query to a query or any instance of $
-`.$(query) and .$new` of an instance of $
+`.$(query) similar to .find in jQuery but you have to prepend '*' for selectorAll
+and .$new` of an instance of $
 ```
 $("div#main").$new('p').text='this a new paragraph'
 
