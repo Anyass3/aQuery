@@ -578,8 +578,6 @@ _$.att = function (q) {
 // export const $.new
 
 
-window.$new = $new;
-window.$el = $el;
 window.$ = _$;
-window.Aq = Aq;
-Aq.init_style_defaults();
+
+_$.init_style_defaults();
