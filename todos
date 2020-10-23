@@ -4,3 +4,4 @@ add .len  > .arr.lenght
 add .index > .arr.index_of
 add $() as document  
 $(func) => .ready(func)
+
