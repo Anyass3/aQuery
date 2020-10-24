@@ -9,14 +9,25 @@ It was a personal mini project to help me code js faster. If interested you can 
 ` just a basic javascript knowledge`
 
 # Installation
-`npm i abquery --save`
 
 To get started quickly try the CDN instead:
 
-compiled with babel for browser compatibility
 [https://cdn.jsdelivr.net/npm/abquery@0.3.1/dist/index.min.js]
+compiled with babel for browser compatibility
 
+## getting started using npm:
+`npm i abquery --save`
 
+import what you need
+`import $ from "abquery"`
+##### or
+`const $ = require("abquery")` 
+
+#### NOTE: for some hide and show animation features you have to run this:
+this is only for npm, for the cdn no need
+`$.init_style_defaults()`
+
+# usage and api
 #### `$` is the main object :: Library
 
 ##### `$('query')` is similar to `document.querySelector` but with the $ instance
@@ -26,15 +37,6 @@ compiled with babel for browser compatibility
 ##### `$(el)` useful when you want an element to have an $ instance as it has useful methods
 the arg (el) can be a NodeList or an element or even a list/array of  elements
 
-## getting started using npm:
-import what you need
-`import $ from "abquery"`
-##### or
-`const $ = require("abquery")` 
-
-#### NOTE: for some hide and show animation features you have to run this:
-this is only for npm, for the cdn no need
-`$.init_style_defaults()`
 
 ### query selector
 ```
@@ -138,7 +140,8 @@ and .$new` of an instance of $
 ```
 $("div#main").$new('p').text='this a new paragraph'
 
-##NOTE: $("div#main").$.new('p') will not work
+_NOTE:_
+   $("div#main").$.new('p') will not work
         because $.new is a static method so it 
         be called on an instance of $
         so use in case of an instance of $:
@@ -155,44 +158,46 @@ $() will query the document as an instance
 
 ().$$ equals to document
 
-### others
+### some methods
 
-###### .run //this will run a func for all or the element queried
+ .run //this will run a func for all or the element queried
         eg: .run(func) || .run(e=>{})
  
-###### .$run //this will run a func for all or the element queried against a variable or array
+ .$run //this will run a func for all or the element queried against a variable or array
         eg: .$run(func,arr) || $run((e,var||array_item)=>{},var||array)
-###### .append // to append a child node/element
-###### .appendParent // to append to a parent node/element
-###### .detach // to detach or remove a child node/element
-###### .detachParent // to detach self from a parent node/element
-###### .len // to get the length of the query
-###### .index // to get the index of an element or instance of $ in a query 
+
+ .append // to append a child node/element
+
+ .appendParent // to append to a parent node/element
+
+ .detach // to detach or remove a child node/element
+
+ .detachParent // to detach self from a parent node/element
+
+#### some properties getters and setters
+ .len // to get the length of the query
+
+ .index // to get the index of an element or instance of $ in a query 
  useful for query selectorAll
 
-###### .html //to get or set the innerHTML
-###### .text //to get or set the textContent
-###### .val //to get or set form inputs or textarea or files or checkboxes or radios etc
+ .html //to get or set the innerHTML
+
+ .text //to get or set the textContent
+
+ .val //to get or set form inputs or textarea or files or checkboxes or radios etc
     //you do not need to think whether it is .value or .checked or .files etc. it will do the job for you
     
     NOTE: NOT ALL INPUT TYPES CAN BE SET
     
-######  .children // to get children nodes
-######  .parent // to get an element/node's parent
-######  .parents // similar to .parent but usefull querySelectorAll/$(*q)
- 
-##### Get a form data without hussle
-```
-$("form").$("* input, select, textarea").val //this will return an object which can directly be sent to the server
-#### NOTE: the inputs should have a name or id attrs SET eg: input type file, can only be set/added by a user interraction
-```
-#### hide and show modals eg:
-###### let say there are elements/anchors with a data-toggle="modal" and a data-target property that is equal to a query to toggle
-###### like how bootstrap declares its modals
-```
-$("*[data-toggle=modal]").on('click',(e)=>$(`$(e.target).attr("data-target")}`).toggleClass("show"))
 
-```
+ .children // to get children nodes
+  
+ .parent // to get an element/node's parent
+
+ .parents // similar to .parent but usefull querySelectorAll/$(*q)
+ 
+
+
 ### some useful static methods
 ```
 $.new(tagname) // to create a new element 
@@ -235,21 +240,38 @@ $.add_style(selector,rules,id=$.styleElementId)
 $.ready(func) to run the functin on DOMContentLoaded
 $.on(event,func) similar to document.addEventListener(event,func)
 ```
+##### some examples
+ Get a form data without hussle
+```
+$("form").$("* input, select, textarea").val //this will return an object which can directly be sent to the server
+
+ NOTE: the inputs should have a name or id attrs SET eg: input type file, can only be set/added by a user interraction
+```
+
+ hide and show modals eg:
+ let say there are elements/anchors with a data-toggle="modal" and a data-target property that is equal to a query to toggle
+ like how bootstrap declares its modals
+```
+$("*[data-toggle=modal]").on('click',(e)=>$(`$(e.target).attr("data-target")}`).toggleClass("show"))
+
+```
+
+
 ## You can check the code to see the methods
 `src/index.js`
 
 The compiled version `dist/index.js` and `dist/index.min.js`
 
-### NOTE:
+#### NOTE:
 ```
 multiple selectors eg:- $("#nav, a, etc") can ONLY be strings separated by commas.
 
 BUT methods maybe list/array of strings OR strings separated by commas 
         eg:- .addClass(['hide','nav-link', etc]) or .addClass("hide, nav-link, etc")
         either is fine 
+Also spaces doesn't matter
+Eg:- .addClass("show  ,      nav")
 ```
-#### Also spaces doesn't matter
-
 !!!ENJOY
 ### more to come
 Like modal time-ago tooltips fetch etc
