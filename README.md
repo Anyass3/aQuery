@@ -150,7 +150,7 @@ $("div#main").$("*p") // to querySelcetorAll p tags in the div
 ```
 $() will query the document as an instance
 
-#().$$ equals to document
+().$$ equals to document
 
 ### others
 
