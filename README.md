@@ -21,7 +21,7 @@
 ##### `$.new(tagname) or $('<tagname>')` it's used to create a html element with the $ instance
 
 ##### `$(el)` useful when you want an element to have an $ instance as it has useful methods
-the arg (el) can a NodeList or an element or even a list/array of  elements
+the arg (el) can be a NodeList or an element or even a list/array of  elements
 
 ## getting started using npm:
 ##### import what you need
