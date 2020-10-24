@@ -140,7 +140,7 @@ and .$new` of an instance of $
 ```
 $("div#main").$new('p').text='this a new paragraph'
 
-_NOTE:_
+NOTE:
    $("div#main").$.new('p') will not work
         because $.new is a static method so it 
         be called on an instance of $
@@ -159,7 +159,7 @@ $() will query the document as an instance
 ().$$ equals to document
 
 ### some methods
-
+```
  .run //this will run a func for all or the element queried
         eg: .run(func) || .run(e=>{})
  
@@ -173,8 +173,9 @@ $() will query the document as an instance
  .detach // to detach or remove a child node/element
 
  .detachParent // to detach self from a parent node/element
-
+```
 #### some properties getters and setters
+```
  .len // to get the length of the query
 
  .index // to get the index of an element or instance of $ in a query 
@@ -195,9 +196,7 @@ $() will query the document as an instance
  .parent // to get an element/node's parent
 
  .parents // similar to .parent but usefull querySelectorAll/$(*q)
- 
-
-
+ ```
 ### some useful static methods
 ```
 $.new(tagname) // to create a new element 
