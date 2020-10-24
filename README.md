@@ -1,16 +1,19 @@
 
 # abQuery v 0.3.1
 ### Re-designing JQuery : If you are like me, you hate large js libraries 
-##### this is minimal library similar to Jquery in some ways with somewhat fewer features but amazing
-### This was a personal mini project to help me code js faster. If interested you can try it. 
+this is minimal library similar to Jquery in some ways with somewhat fewer features but amazing
+
+It was a personal mini project to help me code js faster. If interested you can try it. 
 
 ## Prerequisites:
 ` just a basic javascript knowledge`
 
 # Installation
 `npm i abquery --save`
-## To get started quickly try the CDN instead:
-#### compiled with babel for browser compatibility
+
+To get started quickly try the CDN instead:
+
+compiled with babel for browser compatibility
 [https://cdn.jsdelivr.net/npm/abquery@0.3.1/dist/index.min.js]
 
 
@@ -24,12 +27,12 @@
 the arg (el) can be a NodeList or an element or even a list/array of  elements
 
 ## getting started using npm:
-##### import what you need
+import what you need
 `import $ from "abquery"`
 ##### or
 `const $ = require("abquery")` 
 
-### NOTE: for some hide and show animation features you have to run this:
+#### NOTE: for some hide and show animation features you have to run this:
 this is only for npm, for the cdn no need
 `$.init_style_defaults()`
 
