@@ -1,6 +1,6 @@
 {
   "name": "abquery",
-  "version": "0.3.1",
+  "version": "0.3.11",
   "description": "a very lightweight library like JQuery with fewer features and somewhat different",
   "jsdelivr": "./dist/index.min.js",
   "main": "src/index.js",
@@ -30,7 +30,6 @@
     "@babel/node": "^7.12.1",
     "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
     "@babel/polyfill": "^7.12.1",
-    "@babel/preset-env": "^7.12.1",
-    "babel-minify": "^0.5.1"
+    "@babel/preset-env": "^7.12.1"
   }
 }

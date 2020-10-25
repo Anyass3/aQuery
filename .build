@@ -4,13 +4,16 @@ echo "Created temp.js"
 head -n -1 src/index.js > temp.js
 echo "Copied index.js to excluding the last line temp.js"
 
-cat .cdn >> temp.js 
+cat .cdn >> temp.js
 echo "Added .cdn text to temp.js"
+
+terser -c -m -- temp.js > dist/mb.index.min.js
+echo "Minified src/index.js to dist/mb.index.min.js"
 
 babel temp.js --out-file dist/index.js
 echo "Compiled temp.js to dist/index.js with babel"
 
-babel dist/index.js --presets minify --out-file dist/index.min.js --no-comments
+terser -c -m -- dist/index.js > dist/index.min.js
 echo "Minified dist/index.js to dist/index.min.js"
 
 rm temp.js

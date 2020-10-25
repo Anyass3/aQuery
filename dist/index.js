@@ -67,7 +67,6 @@ var _$ = function _$(query, arg) {
       } else {
         if (this.num > 1 || _$.is_array(this.query)) this.many = true;
         if (_$.is_html(this.query)) this.$$ = this.query;else {
-          console.log(query);
           this.$$ = _toConsumableArray(Array(this.num).keys()).reduce(function (arr) {
             return [].concat(_toConsumableArray(arr), [document.createElement(_this.query.slice(1, -1))]);
           }, []);
@@ -340,14 +339,13 @@ var _$ = function _$(query, arg) {
 
     get child() {
       //needs improvement
-      return _$(this.arr[0].childNodes[0]);
+      return _$(this.arr[0].firstElementChild);
     },
 
     get children() {
-      var children = [];
-      this.run(function (e) {
-        children = [].concat(_toConsumableArray(children), _toConsumableArray(Array.from(e.childNodes)));
-      });
+      var children = this.arr.reduce(function (arr, e) {
+        return [].concat(_toConsumableArray(arr), _toConsumableArray(Array.from(e.children)));
+      }, []);
       return _$(children);
     },
 
@@ -390,13 +388,16 @@ var _$ = function _$(query, arg) {
       });
     },
 
-    //end   :todo=>$(q,n) for new
+    //end
     //new init 
     $: function $(query, num_for_new) {
       if (_$.is_new(query)) return this.$new(query, num_for_new);
-      var els = this.arr.reduce(function (arr, e) {
-        return [].concat(_toConsumableArray(arr), _toConsumableArray(_$(query, e).arr));
-      }, []);
+      var els = Array.from(this.arr.reduce(function (set, e) {
+        return new Set([].concat(_toConsumableArray(set), _toConsumableArray(_$(query, e).arr)));
+      }, new Set())).filter(function (e) {
+        return e !== null;
+      });
+      if (!els) throw Error("query:".concat(query, " is not in parent/s"));
       return els.length === 1 ? _$(els[0]) : _$(els);
     },
     $new: function $new(tag, num) {
@@ -421,6 +422,7 @@ _$.is_array = function (arr) {
 
 _$.is_html = function (el) {
   var arr = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  if (!el) return false;
 
   var is_html = function is_html(e) {
     return e.__proto__.constructor.toString().includes('HTML');
@@ -573,10 +575,7 @@ _$.cls = function (q) {
 
 _$.att = function (q) {
   return _$("*[".concat(q, "]"));
-}; //end
-// $.init_style_defaults()
-// export const $.new
-
+};
 
 window.$ = _$;
 

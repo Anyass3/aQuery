@@ -36,7 +36,7 @@ const $ = (query,arg) => {
             }else{
                 if(this.num>1||$.is_array(this.query)) this.many=true;
                 if($.is_html(this.query))this.$$=this.query;
-                else{console.log(query)
+                else{
                     this.$$=[...Array(this.num).keys()].reduce(
                         (arr)=>[...arr,document.createElement(this.query.slice(1,-1))],
                         []);
@@ -213,13 +213,13 @@ const $ = (query,arg) => {
         ; return $(arr)
         },
         get child(){//needs improvement
-            return $(this.arr[0].childNodes[0])
+            return $(this.arr[0].firstElementChild)
         },
         get children(){
-            let children=[]
-            this.run((e)=>{
-                children=[...children,...Array.from(e.childNodes)]
-            }); return $(children);
+            let children=
+            this.arr.reduce((arr,e)=>{
+                return [...arr,...Array.from(e.children)]
+            },[]); return $(children);
         },
         get len(){return this.arr.length},
         get html(){return this.prop('innerHTML')},
@@ -239,15 +239,16 @@ const $ = (query,arg) => {
                 e[prop]=value
             })
         },
-        //end   :todo=>$(q,n) for new
+        //end
         //new init 
         $(query,num_for_new){
             if($.is_new(query))
                 return this.$new(query,num_for_new);
     
-            const els=this.arr.reduce((arr,e)=>{
-                return [...arr,...$(query,e).arr]
-            },[])
+            const els=Array.from(this.arr.reduce((set,e)=>{
+                return new Set([...set,...$(query,e).arr])
+            },new Set)).filter(e=>e!==null);
+            if(!els)throw Error(`query:${query} is not in parent/s`)
             return els.length===1 ? $(els[0]):$(els)
         },
         $new(tag,num){
@@ -271,6 +272,7 @@ const $ = (query,arg) => {
         NodeList===arr.__proto__.constructor
     }
     $.is_html=(el,arr=true)=>{
+        if(!el)return false
         const is_html=(e)=>e.__proto__.constructor.toString().includes('HTML')
         if(arr){
             if(!$.is_array(el))el=[el];
