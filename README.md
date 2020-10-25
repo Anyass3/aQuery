@@ -16,7 +16,7 @@ To get started quickly try the CDN instead:
 compiled with babel for browser compatibility
 
 or for modern browsers only
-[https://cdn.jsdelivr.net/npm/abquery@0.3.11/dist/md.index.min.js]
+[https://cdn.jsdelivr.net/npm/abquery@0.3.11/dist/mb.index.min.js]
 
 ## getting started using npm:
 `npm i abquery --save`
@@ -27,8 +27,8 @@ import what you need
 `const $ = require("abquery")` 
 
 #### NOTE: for some hide and show animation features you have to run this:
-this is only for npm, for the cdn no need
 `$.init_style_defaults()`
+this is only for npm, for the cdn no need
 
 # usage and api
 #### `$` is the main object :: Library
