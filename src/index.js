@@ -22,7 +22,6 @@ const $ = (query,arg) => {
             this.new=(typeof(query)==='string'&&$.is_new(query))
             
             if(!this.new&&!$.is_html(this.query)){
-                console.log('this.query',this.query)
                 let queryer,[query,all] = $.clean(this.query,true)
                 if(all){ queryer=(q)=>this.__query__.querySelectorAll(q);this.many=true;}
                 else queryer=(q)=>this.__query__.querySelector(q);
@@ -54,7 +53,7 @@ const $ = (query,arg) => {
             this.addClass(animate);
             setTimeout(()=>{
                     if(!keep)this.rmClass(animate)
-                },delay);func(); return this
+                },delay);func(...args); return this
         },
         hide({cls='',animate="abquery-hide",delay=600,keep=false}={},func=()=>{}){
             this.addClass(animate);
@@ -62,7 +61,7 @@ const $ = (query,arg) => {
                     if(!cls) this.addClass('abquery-d-none');
                     else this.rmClass(cls);
                     if(!keep)this.rmClass(animate)
-                },delay); func(); return this
+                },delay); func(...args); return this
         },
         toggleDisplay({cls=''}={}){
             return this.run((el)=>{
