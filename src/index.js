@@ -392,9 +392,9 @@ const $ = (query,arg) => {
         $.on("DOMContentLoaded",func)
     }
     $.new=(tagName,num)=>$(`<${tagName}>`,num)
-    $.id =(q)=>$(`#${q}`)
-    $.cls =(q)=>$(`*.${q}`)
-    $.att =(q)=>$(`*[${q}]`)
+    $.id =(q)=>$(q.split(',').reduce((ar,i)=>[...ar,'#'+i.trim()],[]).toString())
+    $.cls =(q)=>$('*'+q.split(',').reduce((ar,i)=>[...ar,'.'+i.trim()],[]).toString())
+    $.attrs =(q)=>$('*'+q.split(',').reduce((ar,i)=>[...ar,'['+i.trim()+']'],[]).toString())
 
     
     module.exports = $

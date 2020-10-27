@@ -1,5 +1,5 @@
 
-# abQuery v 0.3.12
+# abQuery v 0.3.13
 ### Re-designing JQuery : If you are like me, you hate large js libraries 
 this is minimal library similar to Jquery in some ways with somewhat fewer features but amazing
 
@@ -12,11 +12,11 @@ It was a personal mini project to help me code js faster. If interested you can 
 
 To get started quickly try the CDN instead:
 
-[https://cdn.jsdelivr.net/npm/abquery@0.3.12/dist/index.min.js]
+[https://cdn.jsdelivr.net/npm/abquery@0.3.13/dist/index.min.js]
 compiled with babel for browser compatibility
 
 or for modern browsers only
-[https://cdn.jsdelivr.net/npm/abquery@0.3.12/dist/md.index.min.js]
+[https://cdn.jsdelivr.net/npm/abquery@0.3.13/dist/md.index.min.js]
 
 ## getting started using npm:
 `npm i abquery --save`
@@ -216,9 +216,12 @@ $() will query the document as an instance
 ```
 $.new(tagname) // to create a new element 
 $.id(id) // similar to document.getElementById(id)
+        $.id('id1,id2,etc') or $.id('id1')
 $.cls(cn) // similar to document.getElementsByClassName(cn)
-$.att('attr' or 'attr=value') it can be used to get all element by that attr or "attr=value"
+        $.cls('cn1,cn2,etc') or $.cls('cn1')
+$.attrs('attr' or 'attr=value') it can be used to get all element by that attr or "attr=value"
         similar to document.querySelectorAll("[attr or attr=value]")
+        $.attrs('attr=val,attr2=val,etc') or $.attrs('attr=val')
 
 $.form_value(input_element) 
         gets the value whether its .checked,.value, select fields
