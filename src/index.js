@@ -22,6 +22,7 @@ const $ = (query,arg) => {
             this.new=(typeof(query)==='string'&&$.is_new(query))
             
             if(!this.new&&!$.is_html(this.query)){
+                console.log('this.query',this.query)
                 let queryer,[query,all] = $.clean(this.query,true)
                 if(all){ queryer=(q)=>this.__query__.querySelectorAll(q);this.many=true;}
                 else queryer=(q)=>this.__query__.querySelector(q);
@@ -92,12 +93,6 @@ const $ = (query,arg) => {
             return this.$run((e,c)=>{
                 e.classList.toggle(c);
             },cls); 
-        },
-        
-        on(events,func){
-            return this.$run((e,event)=>{
-                $.on(event,func,e);
-            },events);
         },
         css(props,value,imp=false){
             const split=(v,s='!')=> [v.split(s)[0].trim(),imp?imp:!!v.split(s)[1]]
@@ -240,6 +235,25 @@ const $ = (query,arg) => {
             })
         },
         //end
+        //some-events
+        on(events,func){
+            return this.$run((e,event)=>{
+                $.on(event,func,e);
+            },events);
+        },
+        hover(func){
+            this.on('mouseover,mouseout',func)
+        },
+        click(func){
+            this.on('click',func)
+        },
+        debounce(ev,fn,delay){
+            this.on(ev,$.debounce(fn,delay))
+        },
+        throttle(ev,fn,delay){
+            this.on(ev,$.throttle(fn,delay))
+        },
+        //end
         //new init 
         $(query,num_for_new){
             if($.is_new(query))
@@ -302,7 +316,6 @@ const $ = (query,arg) => {
             if(data===null||e.type==="submit")return dict;
             return {...dict,[e.name||e.id]:data}
         },{})
-        
     }
     $.form_value=(e,key=false)=>{
         if(e.tagName==="INPUT"||e.tagName==="TEXTAREA"){
@@ -312,12 +325,29 @@ const $ = (query,arg) => {
                 if(e.multiple===true) return key? 'files': e.files;
                 return key? 'files[0]': e.files[0]
             }else return key? 'value': e.value
-        }
-        else if(e.tagName==="SELECT")
+        }else if(e.tagName==="SELECT")
         return key? 'select.option.selected':Array.from(e.options)
         .filter((option) => option.selected)
         .map((option) => option.value);
         else return null
+    }
+    $.debounce=(fn,delay=2000)=>{
+        let timeout;
+        return (...args)=>{
+          if (!!timeout)clearTimeout(timeout);
+          timeout=setTimeout(()=>{
+            fn(...args)
+          },delay)
+        }
+    }
+    $.throttle=(fn,delay=2000)=>{
+        let record=0;
+        return (...args)=>{
+          const now = new Date().getTime();
+          if(now-record<delay)return;
+          record=now;
+          return fn(...args);
+        }
     }
     $.styleElementId = "abquery-stylesheet";
     $.css_prefix=(rule)=>{

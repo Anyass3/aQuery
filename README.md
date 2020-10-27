@@ -1,5 +1,5 @@
 
-# abQuery v 0.3.11
+# abQuery v 0.3.12
 ### Re-designing JQuery : If you are like me, you hate large js libraries 
 this is minimal library similar to Jquery in some ways with somewhat fewer features but amazing
 
@@ -12,11 +12,11 @@ It was a personal mini project to help me code js faster. If interested you can 
 
 To get started quickly try the CDN instead:
 
-[https://cdn.jsdelivr.net/npm/abquery@0.3.11/dist/index.min.js]
+[https://cdn.jsdelivr.net/npm/abquery@0.3.12/dist/index.min.js]
 compiled with babel for browser compatibility
 
 or for modern browsers only
-[https://cdn.jsdelivr.net/npm/abquery@0.3.11/dist/md.index.min.js]
+[https://cdn.jsdelivr.net/npm/abquery@0.3.12/dist/md.index.min.js]
 
 ## getting started using npm:
 `npm i abquery --save`
@@ -176,6 +176,18 @@ $() will query the document as an instance
  .detach // to detach or remove a child node/element
 
  .detachParent // to detach self from a parent node/element
+ .on(event,func) similar to .addEventListener(event,func)
+ .debounce 
+      $().debounce('mouseover',(e)=>{
+        console.log(e.clientX,e.clientY)
+      },2000)
+ .throttle
+      $().throttle('mouseover',(e)=>{
+        console.log(e.clientX,e.clientY)
+      },2000)
+    // if you don't debounce and throttle
+    // you may ask Google
+    // it's very useful
 ```
 #### some properties getters and setters
 ```
@@ -240,7 +252,16 @@ $.add_style(selector,rules,id=$.styleElementId)
             
             Now you can use that class in your elements
 $.ready(func) to run the functin on DOMContentLoaded
-$.on(event,func) similar to document.addEventListener(event,func)
+$.on(event,func,el=document) similar to el.addEventListener(event,func)
+
+$.throttle
+        $().click($.throttle((e)=>{
+                console.log(e)
+        },2000))
+$.debounce
+        $().on('click', $.debounce((e)=>{
+                console.log(e)
+        },2000))
 ```
 ##### some examples
  Get a form data without hussle
@@ -263,6 +284,7 @@ $("*[data-toggle=modal]").on('click',(e)=>$(`$(e.target).attr("data-target")}`).
 `src/index.js`
 
 The compiled version `dist/index.js` and `dist/index.min.js`
+or only minified version `dist/mb.index.min.js`
 
 #### NOTE:
 ```
@@ -270,7 +292,7 @@ multiple selectors eg:- $("#nav, a, etc") can ONLY be strings separated by comma
 
 BUT methods maybe list/array of strings OR strings separated by commas 
         eg:- .addClass(['hide','nav-link', etc]) or .addClass("hide, nav-link, etc")
-        either is fine 
+        either is fine
 Also spaces doesn't matter
 Eg:- .addClass("show  ,      nav")
 ```

@@ -40,6 +40,8 @@ var _$ = function _$(query, arg) {
       this["new"] = typeof query === 'string' && _$.is_new(query);
 
       if (!this["new"] && !_$.is_html(this.query)) {
+        console.log('this.query', this.query);
+
         var queryer,
             _$$clean = _$.clean(this.query, true),
             _$$clean2 = _slicedToArray(_$$clean, 2),
@@ -173,11 +175,6 @@ var _$ = function _$(query, arg) {
       return this.$run(function (e, c) {
         e.classList.toggle(c);
       }, cls);
-    },
-    on: function on(events, func) {
-      return this.$run(function (e, event) {
-        _$.on(event, func, e);
-      }, events);
     },
     css: function css(props, value) {
       var imp = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
@@ -389,6 +386,25 @@ var _$ = function _$(query, arg) {
     },
 
     //end
+    //some-events
+    on: function on(events, func) {
+      return this.$run(function (e, event) {
+        _$.on(event, func, e);
+      }, events);
+    },
+    hover: function hover(func) {
+      this.on('mouseover,mouseout', func);
+    },
+    click: function click(func) {
+      this.on('click', func);
+    },
+    debounce: function debounce(ev, fn, delay) {
+      this.on(ev, _$.debounce(fn, delay));
+    },
+    throttle: function throttle(ev, fn, delay) {
+      this.on(ev, _$.throttle(fn, delay));
+    },
+    //end
     //new init 
     $: function $(query, num_for_new) {
       if (_$.is_new(query)) return this.$new(query, num_for_new);
@@ -494,6 +510,32 @@ _$.form_value = function (e) {
   }).map(function (option) {
     return option.value;
   });else return null;
+};
+
+_$.debounce = function (fn) {
+  var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2000;
+  var timeout;
+  return function () {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    if (!!timeout) clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      fn.apply(void 0, args);
+    }, delay);
+  };
+};
+
+_$.throttle = function (fn) {
+  var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2000;
+  var record = 0;
+  return function () {
+    var now = new Date().getTime();
+    if (now - record < delay) return;
+    record = now;
+    return fn.apply(void 0, arguments);
+  };
 };
 
 _$.styleElementId = "abquery-stylesheet";
