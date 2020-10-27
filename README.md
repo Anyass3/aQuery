@@ -27,8 +27,8 @@ import what you need
 `const $ = require("abquery")` 
 
 #### NOTE: for some hide and show animation features you have to run this:
-this is only for npm, for the cdn no need
 `$.init_style_defaults()`
+this is only for npm, for the cdn no need
 
 # usage and api
 #### `$` is the main object :: Library
