@@ -316,4 +316,3 @@ Eg:- .addClass("show  ,      nav")
 Like modal time-ago tooltips fetch etc
 ## issues are most welcomed
 
-[version]:'0.3.3'
