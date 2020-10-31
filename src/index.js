@@ -49,7 +49,7 @@ const $ = (query,arg) => {
         __get__(props,value){
             if ($.is_array($.clean(props))||$.is_array(props)){
                 props=Object.assign($.is_array(props)?props:$.clean(props));
-                for(let key in props)$.__get__(this,key,props[key])
+                for(let key in props)$.__get__(this,key,()=>$(props[key]))
             }else{
                 if(typeof props==='string'&&!!value)props={props:value}
                 for (let prop in props)$.__get__(this,prop,()=>this.prop(prop))

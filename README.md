@@ -1,5 +1,5 @@
 
-# abQuery v 0.3.2
+# abQuery v 0.3.21
 ### Re-designing JQuery : If you are like me, you hate large js libraries 
 this is minimal library similar to Jquery in some ways with somewhat fewer features but amazing
 
@@ -12,11 +12,11 @@ It was a personal mini project to help me code js faster. If interested you can 
 
 To get started quickly try the CDN instead:
 
-[https://cdn.jsdelivr.net/npm/abquery@0.3.2/dist/index.min.js]
 compiled with babel for browser compatibility
+[https://cdn.jsdelivr.net/npm/abquery@0.3.21/dist/index.min.js]
 
-or for modern browsers only
-[https://cdn.jsdelivr.net/npm/abquery@0.3.2/dist/md.index.min.js]
+or may only be compatible for modern browsers.
+[https://cdn.jsdelivr.net/npm/abquery@0.3.21/dist/mb.index.min.js]
 
 ## getting started using npm:
 `npm i abquery --save`
@@ -77,10 +77,17 @@ $('*div').on('click',(ev)=>{
 
 ### Getting actual elements
 use `.$$` to get the actual element or nodeList(for selectorAll)
-use `[index]` to get an element an a particular index
+
+use `.arr[index]` to get an element an a particular index
         eg: ```
-        $('*div')[0] //first element
-        $('*div')[10] //element at index 10
+        $('*div').arr[0] //first element
+        $('*div').arr[10] //element at index 10
+        ```
+### getting new single instances of $ from a query
+use `[index]` to get element as an instance of $ at a particular index
+        eg: ```
+        $('*div')[0] //first element as an instance
+        $('*div')[10] //element at index 10 as an instance
         ```
 
 #### classes
@@ -309,4 +316,4 @@ Eg:- .addClass("show  ,      nav")
 Like modal time-ago tooltips fetch etc
 ## issues are most welcomed
 
-[version]:'0.3.2'
+[version]:'0.3.3'
