@@ -8,9 +8,8 @@ const $ = (query,arg) => {
         
         __init__(query,arg){
 
-            this.__proto__.name="abqueryObject";
-            this.__proto__.constructor=this.__init__
-
+            this.Type="abqueryObject";
+            if($.is_proto(query)) return query;
             if(typeof(query) ==='function')return $.ready(query)
             this.num=1;this.__query__=document;
             
@@ -22,7 +21,7 @@ const $ = (query,arg) => {
             this.new=(typeof(query)==='string'&&$.is_new(query))
             
             if(!this.new&&!$.is_html(this.query)){
-                let queryer,[query,all] = $.clean(this.query,true)
+                let queryer,[query, all] = $.clean(this.query,true)
                 if(all){ queryer=(q)=>this.__query__.querySelectorAll(q);this.many=true;}
                 else queryer=(q)=>this.__query__.querySelector(q);
                 //if query is list it will query the list items
@@ -44,7 +43,17 @@ const $ = (query,arg) => {
                 }
             }
             this.arr=Array.from(this.many ? this.$$:[this.$$])
+            this.__get__(this.arr)
             return this;
+        },
+        __get__(props,value){
+            if ($.is_array($.clean(props))||$.is_array(props)){
+                props=Object.assign($.is_array(props)?props:$.clean(props));
+                for(let key in props)$.__get__(this,key,props[key])
+            }else{
+                if(typeof props==='string'&&!!value)props={props:value}
+                for (let prop in props)$.__get__(this,prop,()=>this.prop(prop))
+            }
         },
         //methods
         show({cls='',animate='abquery-show',delay=600,keep=false}={},func=()=>{}){
@@ -53,7 +62,7 @@ const $ = (query,arg) => {
             this.addClass(animate);
             setTimeout(()=>{
                     if(!keep)this.rmClass(animate)
-                },delay);func(...args); return this
+                },delay);func(); return this
         },
         hide({cls='',animate="abquery-hide",delay=600,keep=false}={},func=()=>{}){
             this.addClass(animate);
@@ -61,7 +70,7 @@ const $ = (query,arg) => {
                     if(!cls) this.addClass('abquery-d-none');
                     else this.rmClass(cls);
                     if(!keep)this.rmClass(animate)
-                },delay); func(...args); return this
+                },delay); func(); return this
         },
         toggleDisplay({cls=''}={}){
             return this.run((el)=>{
@@ -122,7 +131,7 @@ const $ = (query,arg) => {
         },
         appendParent(nodes){
             return this.$run((e,node)=>{
-                node.appendChild(e)
+                $.e(node).appendChild(e)
             },nodes);
         },
         detachParent(){
@@ -132,18 +141,17 @@ const $ = (query,arg) => {
         },
         append(nodes){
             return this.$run((e,node)=>{
-                e.appendChild(node);
+                e.appendChild($.e(node));
             },nodes);
         },
         detach(nodes){
             return this.$run((e,node)=>{
-                e.removeChild(node)
+                e.removeChild($.e(node))
             },nodes)
         },
         index(e){
-            if($.is_proto(e))return this.arr.indexOf(e.$$)
-            else if($.is_html(e))return this.arr.indexOf(e)
-            console.error("cannot find index of arg")
+            const index = this.arr.indexOf($.e(e))
+            return index>=0?index:Error(console.error("cannot find index of arg"))
         },
         // useful methods
         run(func,{delay=0,every=0}={}){
@@ -196,6 +204,9 @@ const $ = (query,arg) => {
         get class(){
             return this.prop('className')
         },
+        get id(){
+            return this.prop('id')
+        },
         get parent(){
             //returns first child parent
             return $(this.arr[0].parentNode)
@@ -225,6 +236,7 @@ const $ = (query,arg) => {
             else return data;
         },
         set class(className){this.prop('className',className)},
+        set id(id){return this.prop('id',id)},
         set html(html){this.prop('innerHTML',html)},
         set text(text){this.prop('textContent',text)},
         set val(value){
@@ -279,8 +291,9 @@ const $ = (query,arg) => {
     
     
     //static methods
-    $.is_proto=(e)=>$().constructor===e.constructor
+    $.is_proto=(e)=>!!e&&e.Type===$().Type
     $.is_array=(arr)=>{
+        if(!arr)return false
         return [].__proto__===arr.__proto__ ||
         NodeList===arr.__proto__.constructor
     }
@@ -292,25 +305,32 @@ const $ = (query,arg) => {
             return is_html(el[0])
         }else return is_html(el)
     }
-    $.is_new=(query,)=>/^<[a-z]+>$/.test(query)
+    $.is_new=(query,)=>typeof query==='string'&&/^<[a-z]+>$/.test(query)
     $.is_dict=(dict)=>{
+        if(!dict)return false
         let d={};
         return d.__proto__===dict.__proto__
+    }
+    $.__get__=(ins,prop,func)=>{
+        const fn = typeof func!=='function'?()=>func:func;
+        ins.__defineGetter__(prop,fn)
     }
     $.obj_text=(props,str='')=>{
         for(let i in props) str+=`${i}: ${props[i]}; `.trim()
         return str
     }
     $.clean=(q,m=false)=>{
-        if(typeof(q)!=="string")return q;
+        if($.is_array(q))q=q.toString();
+        else if(typeof(q)!=="string")return q;
         let all=false;if(q[0]==="*"){q=q.slice(1);all=true};
         q=q.split(',').reduce((arr,q)=>{return[...arr,q.trim()]},[]);
         q=q.length===1?q[0]:q
         return m?[q,all]:q
     }
+    $.e=(e)=>$.is_proto(e)?e.$$:e
     $.form_data=(inputs)=>{
         if(!$.is_array(inputs))inputs=[inputs];
-        return inputs.reduce((dict,e)=>{
+        return Array.from(inputs).reduce((dict,e)=>{
             let data=$.form_value(e)
             if(data===null||e.type==="submit")return dict;
             return {...dict,[e.name||e.id]:data}
@@ -391,9 +411,9 @@ const $ = (query,arg) => {
         $.on("DOMContentLoaded",func)
     }
     $.new=(tagName,num)=>$(`<${tagName}>`,num)
-    $.id =(q)=>$(q.split(',').reduce((ar,i)=>[...ar,'#'+i.trim()],[]).toString())
-    $.cls =(q)=>$('*'+q.split(',').reduce((ar,i)=>[...ar,'.'+i.trim()],[]).toString())
-    $.attrs =(q)=>$('*'+q.split(',').reduce((ar,i)=>[...ar,'['+i.trim()+']'],[]).toString())
+    $.id =(q)=>$(q.toString().split(',').reduce((ar,i)=>[...ar,'#'+i.trim()],[]).toString())
+    $.cls =(q)=>$('*'+q.toString().split(',').reduce((ar,i)=>[...ar,'.'+i.trim()],[]).toString())
+    $.attrs =(q)=>$('*'+q.toString().split(',').reduce((ar,i)=>[...ar,'['+i.trim()+']'],[]).toString())
 
     
     module.exports = $

@@ -30,8 +30,8 @@ var _$ = function _$(query, arg) {
     __init__: function __init__(query, arg) {
       var _this = this;
 
-      this.__proto__.name = "abqueryObject";
-      this.__proto__.constructor = this.__init__;
+      this.Type = "abqueryObject";
+      if (_$.is_proto(query)) return query;
       if (typeof query === 'function') return _$.ready(query);
       this.num = 1;
       this.__query__ = document;
@@ -40,8 +40,6 @@ var _$ = function _$(query, arg) {
       this["new"] = typeof query === 'string' && _$.is_new(query);
 
       if (!this["new"] && !_$.is_html(this.query)) {
-        console.log('this.query', this.query);
-
         var queryer,
             _$$clean = _$.clean(this.query, true),
             _$$clean2 = _slicedToArray(_$$clean, 2),
@@ -77,11 +75,39 @@ var _$ = function _$(query, arg) {
       }
 
       this.arr = Array.from(this.many ? this.$$ : [this.$$]);
+
+      this.__get__(this.arr);
+
       return this;
+    },
+    __get__: function __get__(props, value) {
+      var _this2 = this;
+
+      if (_$.is_array(_$.clean(props)) || _$.is_array(props)) {
+        props = Object.assign(_$.is_array(props) ? props : _$.clean(props));
+
+        for (var key in props) {
+          _$.__get__(this, key, props[key]);
+        }
+      } else {
+        if (typeof props === 'string' && !!value) props = {
+          props: value
+        };
+
+        var _loop = function _loop(prop) {
+          _$.__get__(_this2, prop, function () {
+            return _this2.prop(prop);
+          });
+        };
+
+        for (var prop in props) {
+          _loop(prop);
+        }
+      }
     },
     //methods
     show: function show() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
           _ref$cls = _ref.cls,
@@ -97,13 +123,13 @@ var _$ = function _$(query, arg) {
       if (!cls) this.rmClass('abquery-d-none, d-none').rmCss('display');else this.addClass(cls);
       this.addClass(animate);
       setTimeout(function () {
-        if (!keep) _this2.rmClass(animate);
+        if (!keep) _this3.rmClass(animate);
       }, delay);
       func();
       return this;
     },
     hide: function hide() {
-      var _this3 = this;
+      var _this4 = this;
 
       var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
           _ref2$cls = _ref2.cls,
@@ -118,14 +144,14 @@ var _$ = function _$(query, arg) {
       var func = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
       this.addClass(animate);
       setTimeout(function () {
-        if (!cls) _this3.addClass('abquery-d-none');else _this3.rmClass(cls);
-        if (!keep) _this3.rmClass(animate);
+        if (!cls) _this4.addClass('abquery-d-none');else _this4.rmClass(cls);
+        if (!keep) _this4.rmClass(animate);
       }, delay);
       func();
       return this;
     },
     toggleDisplay: function toggleDisplay() {
-      var _this4 = this;
+      var _this5 = this;
 
       var _ref3 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
           _ref3$cls = _ref3.cls,
@@ -135,11 +161,11 @@ var _$ = function _$(query, arg) {
         if (_$(el).hasClass(!cls ? ['abquery-d-none', 'd-none'] : cls, {
           someClass: true
         })) {
-          _this4.show({
+          _this5.show({
             cls: cls
           });
         } else {
-          _this4.hide({
+          _this5.hide({
             cls: cls
           });
         }
@@ -214,7 +240,7 @@ var _$ = function _$(query, arg) {
     },
     appendParent: function appendParent(nodes) {
       return this.$run(function (e, node) {
-        node.appendChild(e);
+        _$.e(node).appendChild(e);
       }, nodes);
     },
     detachParent: function detachParent() {
@@ -224,17 +250,17 @@ var _$ = function _$(query, arg) {
     },
     append: function append(nodes) {
       return this.$run(function (e, node) {
-        e.appendChild(node);
+        e.appendChild(_$.e(node));
       }, nodes);
     },
     detach: function detach(nodes) {
       return this.$run(function (e, node) {
-        e.removeChild(node);
+        e.removeChild(_$.e(node));
       }, nodes);
     },
     index: function index(e) {
-      if (_$.is_proto(e)) return this.arr.indexOf(e.$$);else if (_$.is_html(e)) return this.arr.indexOf(e);
-      console.error("cannot find index of arg");
+      var index = this.arr.indexOf(_$.e(e));
+      return index >= 0 ? index : Error(console.error("cannot find index of arg"));
     },
     // useful methods
     run: function run(func) {
@@ -253,19 +279,19 @@ var _$ = function _$(query, arg) {
       return this;
     },
     $run: function $run(func, arr) {
-      var _this5 = this;
+      var _this6 = this;
 
       arr = _$.clean(arr);
       if (!_$.is_array(arr)) arr = [arr];
       arr.forEach(function (i) {
-        return _this5.run(function (e) {
+        return _this6.run(function (e) {
           return func(e, i);
         });
       });
       return this;
     },
     $runBool: function $runBool(func, arr) {
-      var _this6 = this;
+      var _this7 = this;
 
       var _ref8 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
           _ref8$someArr = _ref8.someArr,
@@ -277,9 +303,9 @@ var _$ = function _$(query, arg) {
       if (!_$.is_array(arr)) arr = [arr];
 
       var to_run = function to_run(i) {
-        return someEl ? _this6.arr.some(function (e) {
+        return someEl ? _this7.arr.some(function (e) {
           return func(e, i);
-        }) : _this6.arr.every(function (e) {
+        }) : _this7.arr.every(function (e) {
           return func(e, i);
         });
       };
@@ -319,6 +345,10 @@ var _$ = function _$(query, arg) {
     //property getters & setters
     get class() {
       return this.prop('className');
+    },
+
+    get id() {
+      return this.prop('id');
     },
 
     get parent() {
@@ -367,6 +397,10 @@ var _$ = function _$(query, arg) {
 
     set class(className) {
       this.prop('className', className);
+    },
+
+    set id(id) {
+      return this.prop('id', id);
     },
 
     set html(html) {
@@ -429,10 +463,11 @@ var _$ = function _$(query, arg) {
 
 
 _$.is_proto = function (e) {
-  return _$().constructor === e.constructor;
+  return !!e && e.Type === _$().Type;
 };
 
 _$.is_array = function (arr) {
+  if (!arr) return false;
   return [].__proto__ === arr.__proto__ || NodeList === arr.__proto__.constructor;
 };
 
@@ -451,12 +486,21 @@ _$.is_html = function (el) {
 };
 
 _$.is_new = function (query) {
-  return /^<[a-z]+>$/.test(query);
+  return typeof query === 'string' && /^<[a-z]+>$/.test(query);
 };
 
 _$.is_dict = function (dict) {
+  if (!dict) return false;
   var d = {};
   return d.__proto__ === dict.__proto__;
+};
+
+_$.__get__ = function (ins, prop, func) {
+  var fn = typeof func !== 'function' ? function () {
+    return func;
+  } : func;
+
+  ins.__defineGetter__(prop, fn);
 };
 
 _$.obj_text = function (props) {
@@ -471,7 +515,7 @@ _$.obj_text = function (props) {
 
 _$.clean = function (q) {
   var m = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  if (typeof q !== "string") return q;
+  if (_$.is_array(q)) q = q.toString();else if (typeof q !== "string") return q;
   var all = false;
 
   if (q[0] === "*") {
@@ -487,9 +531,13 @@ _$.clean = function (q) {
   return m ? [q, all] : q;
 };
 
+_$.e = function (e) {
+  return _$.is_proto(e) ? e.$$ : e;
+};
+
 _$.form_data = function (inputs) {
   if (!_$.is_array(inputs)) inputs = [inputs];
-  return inputs.reduce(function (dict, e) {
+  return Array.from(inputs).reduce(function (dict, e) {
     var data = _$.form_value(e);
 
     if (data === null || e.type === "submit") return dict;
@@ -608,15 +656,21 @@ _$["new"] = function (tagName, num) {
 };
 
 _$.id = function (q) {
-  return _$("#".concat(q));
+  return _$(q.toString().split(',').reduce(function (ar, i) {
+    return [].concat(_toConsumableArray(ar), ['#' + i.trim()]);
+  }, []).toString());
 };
 
 _$.cls = function (q) {
-  return _$("*.".concat(q));
+  return _$('*' + q.toString().split(',').reduce(function (ar, i) {
+    return [].concat(_toConsumableArray(ar), ['.' + i.trim()]);
+  }, []).toString());
 };
 
-_$.att = function (q) {
-  return _$("*[".concat(q, "]"));
+_$.attrs = function (q) {
+  return _$('*' + q.toString().split(',').reduce(function (ar, i) {
+    return [].concat(_toConsumableArray(ar), ['[' + i.trim() + ']']);
+  }, []).toString());
 };
 
 window.$ = _$;
