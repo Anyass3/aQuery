@@ -1,5 +1,5 @@
 
-# abQuery v 0.3.2
+# abQuery v [version]
 ### Re-designing JQuery : If you are like me, you hate large js libraries 
 this is minimal library similar to Jquery in some ways with somewhat fewer features but amazing
 
