@@ -21,7 +21,6 @@ or may only be compatible for modern browsers.
 ## getting started using npm:
 `npm i abquery --save`
 
-import what you need
 `import $ from "abquery"`
 ##### or
 `const $ = require("abquery")` 

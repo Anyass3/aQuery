@@ -86,22 +86,28 @@ var _$ = function _$(query, arg) {
       if (_$.is_array(_$.clean(props)) || _$.is_array(props)) {
         props = Object.assign(_$.is_array(props) ? props : _$.clean(props));
 
+        var _loop = function _loop(key) {
+          _$.__get__(_this2, key, function () {
+            return _$(props[key]);
+          });
+        };
+
         for (var key in props) {
-          _$.__get__(this, key, props[key]);
+          _loop(key);
         }
       } else {
         if (typeof props === 'string' && !!value) props = {
           props: value
         };
 
-        var _loop = function _loop(prop) {
+        var _loop2 = function _loop2(prop) {
           _$.__get__(_this2, prop, function () {
             return _this2.prop(prop);
           });
         };
 
         for (var prop in props) {
-          _loop(prop);
+          _loop2(prop);
         }
       }
     },
