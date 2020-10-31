@@ -1,4 +1,4 @@
-
+[version]:'0.3.2'
 # abQuery v [version]
 ### Re-designing JQuery : If you are like me, you hate large js libraries 
 this is minimal library similar to Jquery in some ways with somewhat fewer features but amazing
@@ -309,4 +309,4 @@ Eg:- .addClass("show  ,      nav")
 Like modal time-ago tooltips fetch etc
 ## issues are most welcomed
 
-[version]:'0.3.2'
+
