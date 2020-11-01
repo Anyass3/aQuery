@@ -69,7 +69,7 @@ const $ = (query,arg) => {
             return this.__define_prop__([...Object.keys(HTMLElement.prototype),...arr]
             .filter((i)=>!/^on/.test(i))
             .reduce((ob,i)=>{
-                return ['click','style','focus','blur']?{...ob}:
+                return ['click','style','focus','blur'].includes(i)?{...ob}:
                 {...ob,[i]:{_get:()=>this.prop(i),_set:(v)=>this.prop(i,v)}}
             },{}))
         },
