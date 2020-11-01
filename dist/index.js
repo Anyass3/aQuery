@@ -1,5 +1,7 @@
 "use strict";
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -32,12 +34,12 @@ var _$ = function _$(query, arg) {
 
       this.Type = "abqueryObject";
       if (_$.is_proto(query)) return query;
-      if (typeof query === 'function') return _$.ready(query);
+      if (_$["typeof"](query, 'function')) return _$.ready(query);
       this.num = 1;
       this.__query__ = document;
-      if (!!arg && typeof arg === 'number') this.num = arg;else if (!!arg && _$.is_html(arg)) this.__query__ = arg;
+      if (!!arg && _$["typeof"](arg, 'number')) this.num = arg;else if (!!arg && _$.is_html(arg)) this.__query__ = arg;
       this.query = query || document;
-      this["new"] = typeof query === 'string' && _$.is_new(query);
+      this["new"] = _$["typeof"](query, 'string') && _$.is_new(query);
 
       if (!this["new"] && !_$.is_html(this.query)) {
         var queryer,
@@ -78,7 +80,7 @@ var _$ = function _$(query, arg) {
 
       this.__get__(this.arr);
 
-      return this;
+      return this.__html_proto__(['id']);
     },
     __get__: function __get__(props, value) {
       var _this2 = this;
@@ -96,24 +98,63 @@ var _$ = function _$(query, arg) {
           _loop(key);
         }
       } else {
-        if (typeof props === 'string' && !!value) props = {
-          props: value
-        };
+        if (_$["typeof"](props, 'string') && !!value) props = _defineProperty({}, props, value);
 
-        var _loop2 = function _loop2(prop) {
-          _$.__get__(_this2, prop, function () {
-            return _this2.prop(prop);
-          });
-        };
-
-        for (var prop in props) {
-          _loop2(prop);
+        for (var _prop in props) {
+          _$.__set__(this, _prop, props[_prop]);
         }
       }
+
+      return this;
+    },
+    __set__: function __set__(props, value) {
+      if (_$["typeof"](props, 'string') && !!value) props = _defineProperty({}, props, value);
+
+      for (var _prop2 in props) {
+        _$.__set__(this, _prop2, props[_prop2]);
+      }
+
+      return this;
+    },
+    __define_prop__: function __define_prop__(props) {
+      var _this3 = this;
+
+      var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
+        _get: function _get() {
+          return _this3.prop(prop);
+        },
+        _set: function _set(v) {
+          return _this3.prop(prop, v);
+        }
+      };
+      if (_$["typeof"](props, 'string') && !!value) props = _defineProperty({}, props, value);
+
+      for (var _prop3 in props) {
+        _$.__define_prop__(this, _prop3, props[_prop3]);
+      }
+
+      return this;
+    },
+    __html_proto__: function __html_proto__() {
+      var _this4 = this;
+
+      var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      return this.__define_prop__([].concat(_toConsumableArray(Object.keys(HTMLElement.prototype)), _toConsumableArray(arr)).filter(function (i) {
+        return !/^on/.test(i);
+      }).reduce(function (ob, i) {
+        return ['click', 'style', 'focus', 'blur'] ? Object.assign({}, ob) : Object.assign({}, ob, _defineProperty({}, i, {
+          _get: function _get() {
+            return _this4.prop(i);
+          },
+          _set: function _set(v) {
+            return _this4.prop(i, v);
+          }
+        }));
+      }, {}));
     },
     //methods
     show: function show() {
-      var _this3 = this;
+      var _this5 = this;
 
       var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
           _ref$cls = _ref.cls,
@@ -129,13 +170,13 @@ var _$ = function _$(query, arg) {
       if (!cls) this.rmClass('abquery-d-none, d-none').rmCss('display');else this.addClass(cls);
       this.addClass(animate);
       setTimeout(function () {
-        if (!keep) _this3.rmClass(animate);
+        if (!keep) _this5.rmClass(animate);
       }, delay);
       func();
       return this;
     },
     hide: function hide() {
-      var _this4 = this;
+      var _this6 = this;
 
       var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
           _ref2$cls = _ref2.cls,
@@ -150,14 +191,14 @@ var _$ = function _$(query, arg) {
       var func = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
       this.addClass(animate);
       setTimeout(function () {
-        if (!cls) _this4.addClass('abquery-d-none');else _this4.rmClass(cls);
-        if (!keep) _this4.rmClass(animate);
+        if (!cls) _this6.addClass('abquery-d-none');else _this6.rmClass(cls);
+        if (!keep) _this6.rmClass(animate);
       }, delay);
       func();
       return this;
     },
     toggleDisplay: function toggleDisplay() {
-      var _this5 = this;
+      var _this7 = this;
 
       var _ref3 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
           _ref3$cls = _ref3.cls,
@@ -167,11 +208,11 @@ var _$ = function _$(query, arg) {
         if (_$(el).hasClass(!cls ? ['abquery-d-none', 'd-none'] : cls, {
           someClass: true
         })) {
-          _this5.show({
+          _this7.show({
             cls: cls
           });
         } else {
-          _this5.hide({
+          _this7.hide({
             cls: cls
           });
         }
@@ -219,7 +260,7 @@ var _$ = function _$(query, arg) {
       return this.$set(function (e, prop, val) {
         if (_$.is_array(_$.clean(props)) || val === undefined) return e.style.getPropertyValue(prop); //e.style.cssText=$.obj_text(props,e.style.cssText);
         else {
-            var _ref5 = typeof val === 'number' ? [val, false] : split(val),
+            var _ref5 = _$["typeof"](val, 'number') ? [val, false] : split(val),
                 _ref6 = _slicedToArray(_ref5, 2),
                 v = _ref6[0],
                 _imp = _ref6[1];
@@ -285,19 +326,19 @@ var _$ = function _$(query, arg) {
       return this;
     },
     $run: function $run(func, arr) {
-      var _this6 = this;
+      var _this8 = this;
 
       arr = _$.clean(arr);
       if (!_$.is_array(arr)) arr = [arr];
       arr.forEach(function (i) {
-        return _this6.run(function (e) {
+        return _this8.run(function (e) {
           return func(e, i);
         });
       });
       return this;
     },
     $runBool: function $runBool(func, arr) {
-      var _this7 = this;
+      var _this9 = this;
 
       var _ref8 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
           _ref8$someArr = _ref8.someArr,
@@ -309,9 +350,9 @@ var _$ = function _$(query, arg) {
       if (!_$.is_array(arr)) arr = [arr];
 
       var to_run = function to_run(i) {
-        return someEl ? _this7.arr.some(function (e) {
+        return someEl ? _this9.arr.some(function (e) {
           return func(e, i);
-        }) : _this7.arr.every(function (e) {
+        }) : _this9.arr.every(function (e) {
           return func(e, i);
         });
       };
@@ -321,7 +362,9 @@ var _$ = function _$(query, arg) {
     $set: function $set(func, props, value) {
       var attrs = [];
       props = _$.clean(props);
-      var propsIsStr = typeof props === 'string';
+
+      var propsIsStr = _$["typeof"](props, 'string');
+
       this.run(function (e) {
         if (_$.is_dict(props)) for (var key in props) {
           func(e, key, props[key]);
@@ -351,10 +394,6 @@ var _$ = function _$(query, arg) {
     //property getters & setters
     get class() {
       return this.prop('className');
-    },
-
-    get id() {
-      return this.prop('id');
     },
 
     get parent() {
@@ -405,10 +444,6 @@ var _$ = function _$(query, arg) {
       this.prop('className', className);
     },
 
-    set id(id) {
-      return this.prop('id', id);
-    },
-
     set html(html) {
       this.prop('innerHTML', html);
     },
@@ -433,16 +468,18 @@ var _$ = function _$(query, arg) {
       }, events);
     },
     hover: function hover(func) {
-      this.on('mouseover,mouseout', func);
+      return this.on('mouseover,mouseout', func);
     },
     click: function click(func) {
-      this.on('click', func);
+      return this.on('click', func);
     },
     debounce: function debounce(ev, fn, delay) {
-      this.on(ev, _$.debounce(fn, delay));
+      if (_$["typeof"](ev, 'function') && (fn === undefined || _$["typeof"](fn, 'number'))) return this.run(_$.debounce(ev, fn));
+      return this.on(ev, _$.debounce(fn, delay));
     },
     throttle: function throttle(ev, fn, delay) {
-      this.on(ev, _$.throttle(fn, delay));
+      if (_$["typeof"](ev, 'function') && (fn === undefined || _$["typeof"](fn, 'number'))) return this.run(_$.throttle(ev, fn));
+      return this.on(ev, _$.throttle(fn, delay));
     },
     //end
     //new init 
@@ -492,7 +529,11 @@ _$.is_html = function (el) {
 };
 
 _$.is_new = function (query) {
-  return typeof query === 'string' && /^<[a-z]+>$/.test(query);
+  return _$["typeof"](query, 'string') && /^<[a-z]+>$/.test(query);
+};
+
+_$["typeof"] = function (arg, type) {
+  return _typeof(arg) === type;
 };
 
 _$.is_dict = function (dict) {
@@ -501,12 +542,31 @@ _$.is_dict = function (dict) {
   return d.__proto__ === dict.__proto__;
 };
 
-_$.__get__ = function (ins, prop, func) {
-  var fn = typeof func !== 'function' ? function () {
+_$.__get__ = function (obj, prop, func) {
+  var fn = !_$["typeof"](func, 'function') ? function () {
     return func;
   } : func;
+  return Object.defineProperty(obj, prop, {
+    get: fn
+  });
+};
 
-  ins.__defineGetter__(prop, fn);
+_$.__set__ = function (obj, prop, func) {
+  return Object.defineProperty(obj, prop, {
+    set: func
+  });
+};
+
+_$.__define_prop__ = function (obj, prop, _ref9) {
+  var _get = _ref9._get,
+      _set = _ref9._set;
+  var fn = !_$["typeof"](_get, 'function') ? function () {
+    return _get;
+  } : _get;
+  return Object.defineProperty(obj, prop, {
+    get: fn,
+    set: _set
+  });
 };
 
 _$.obj_text = function (props) {
@@ -521,7 +581,7 @@ _$.obj_text = function (props) {
 
 _$.clean = function (q) {
   var m = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  if (_$.is_array(q)) q = q.toString();else if (typeof q !== "string") return q;
+  if (_$.is_array(q)) q = q.toString();else if (!_$["typeof"](q, "string")) return q;
   var all = false;
 
   if (q[0] === "*") {

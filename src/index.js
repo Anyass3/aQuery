@@ -10,15 +10,15 @@ const $ = (query,arg) => {
 
             this.Type="abqueryObject";
             if($.is_proto(query)) return query;
-            if(typeof(query) ==='function')return $.ready(query)
+            if($.typeof(query,'function'))return $.ready(query)
             this.num=1;this.__query__=document;
             
-            if(!!arg&&typeof(arg)==='number')this.num=arg;
+            if(!!arg&&$.typeof(arg,'number'))this.num=arg;
             else if(!!arg&&$.is_html(arg))this.__query__=arg;
             
             this.query=query||document;
             
-            this.new=(typeof(query)==='string'&&$.is_new(query))
+            this.new=($.typeof(query,'string')&&$.is_new(query))
             
             if(!this.new&&!$.is_html(this.query)){
                 let queryer,[query, all] = $.clean(this.query,true)
@@ -44,16 +44,34 @@ const $ = (query,arg) => {
             }
             this.arr=Array.from(this.many ? this.$$:[this.$$])
             this.__get__(this.arr)
-            return this;
+            return this.__html_proto__(['id'])
         },
         __get__(props,value){
             if ($.is_array($.clean(props))||$.is_array(props)){
                 props=Object.assign($.is_array(props)?props:$.clean(props));
                 for(let key in props)$.__get__(this,key,()=>$(props[key]))
             }else{
-                if(typeof props==='string'&&!!value)props={props:value}
-                for (let prop in props)$.__get__(this,prop,()=>this.prop(prop))
-            }
+                if($.typeof(props,'string')&&!!value)props={[props]:value}
+                for (let prop in props) $.__set__(this,prop,props[prop])
+            }return this;
+        },
+        __set__(props,value){
+            if($.typeof(props,'string')&&!!value)props={[props]:value};
+            for (let prop in props) $.__set__(this,prop,props[prop]);
+            return this;
+        },
+        __define_prop__(props,value={_get:()=>this.prop(prop),_set:(v)=>this.prop(prop,v)}){
+            if($.typeof(props,'string')&&!!value)props={[props]:value}
+            for (let prop in props)$.__define_prop__(this,prop,props[prop]);
+            return this;
+        },
+        __html_proto__(arr=[]){
+            return this.__define_prop__([...Object.keys(HTMLElement.prototype),...arr]
+            .filter((i)=>!/^on/.test(i))
+            .reduce((ob,i)=>{
+                return ['click','style','focus','blur']?{...ob}:
+                {...ob,[i]:{_get:()=>this.prop(i),_set:(v)=>this.prop(i,v)}}
+            },{}))
         },
         //methods
         show({cls='',animate='abquery-show',delay=600,keep=false}={},func=()=>{}){
@@ -109,7 +127,7 @@ const $ = (query,arg) => {
                     return e.style.getPropertyValue(prop)
                     //e.style.cssText=$.obj_text(props,e.style.cssText);
                 else{
-                const [v,imp]=typeof(val)==='number'?[val,false]:split(val)
+                const [v,imp]=$.typeof(val,'number')?[val,false]:split(val)
                 e.style.setProperty(prop,v,imp ? 'important':'');}
             },props,value);
         },
@@ -176,7 +194,7 @@ const $ = (query,arg) => {
         $set(func,props,value){
             let attrs=[];
             props = $.clean(props)
-            let propsIsStr=(typeof(props)==='string')
+            let propsIsStr=($.typeof(props,'string'))
             this.run((e)=>{
                 if ($.is_dict(props))
                     for(let key in props) func(e,key,props[key]);
@@ -203,9 +221,6 @@ const $ = (query,arg) => {
         //property getters & setters
         get class(){
             return this.prop('className')
-        },
-        get id(){
-            return this.prop('id')
         },
         get parent(){
             //returns first child parent
@@ -236,7 +251,6 @@ const $ = (query,arg) => {
             else return data;
         },
         set class(className){this.prop('className',className)},
-        set id(id){return this.prop('id',id)},
         set html(html){this.prop('innerHTML',html)},
         set text(text){this.prop('textContent',text)},
         set val(value){
@@ -253,16 +267,20 @@ const $ = (query,arg) => {
             },events);
         },
         hover(func){
-            this.on('mouseover,mouseout',func)
+            return this.on('mouseover,mouseout',func)
         },
         click(func){
-            this.on('click',func)
+            return this.on('click',func)
         },
         debounce(ev,fn,delay){
-            this.on(ev,$.debounce(fn,delay))
+            if($.typeof(ev,'function')&&(fn===undefined||$.typeof(fn,'number')))
+            return this.run($.debounce(ev,fn));
+            return this.on(ev,$.debounce(fn,delay))
         },
         throttle(ev,fn,delay){
-            this.on(ev,$.throttle(fn,delay))
+            if($.typeof(ev,'function')&&(fn===undefined||$.typeof(fn,'number')))
+            return this.run($.throttle(ev,fn));
+            return this.on(ev,$.throttle(fn,delay))
         },
         //end
         //new init 
@@ -305,15 +323,23 @@ const $ = (query,arg) => {
             return is_html(el[0])
         }else return is_html(el)
     }
-    $.is_new=(query,)=>typeof query==='string'&&/^<[a-z]+>$/.test(query)
+    $.is_new=(query)=>$.typeof(query,'string')&&/^<[a-z]+>$/.test(query)
+    $.typeof=(arg,type)=>typeof arg===type
     $.is_dict=(dict)=>{
         if(!dict)return false
-        let d={};
+        const d={};
         return d.__proto__===dict.__proto__
     }
-    $.__get__=(ins,prop,func)=>{
-        const fn = typeof func!=='function'?()=>func:func;
-        ins.__defineGetter__(prop,fn)
+    $.__get__=(obj,prop,func)=>{
+        const fn =!$.typeof(func,'function')?()=>func:func;
+        return Object.defineProperty(obj,prop,{get: fn})
+    } 
+    $.__set__=(obj,prop,func)=>{
+        return Object.defineProperty(obj,prop,{set: func})
+    }
+    $.__define_prop__=(obj,prop,{_get,_set})=>{
+        const fn =!$.typeof(_get,'function')?()=>_get:_get;
+        return Object.defineProperty(obj,prop,{get: fn,set: _set})
     }
     $.obj_text=(props,str='')=>{
         for(let i in props) str+=`${i}: ${props[i]}; `.trim()
@@ -321,7 +347,7 @@ const $ = (query,arg) => {
     }
     $.clean=(q,m=false)=>{
         if($.is_array(q))q=q.toString();
-        else if(typeof(q)!=="string")return q;
+        else if(!$.typeof(q,"string"))return q;
         let all=false;if(q[0]==="*"){q=q.slice(1);all=true};
         q=q.split(',').reduce((arr,q)=>{return[...arr,q.trim()]},[]);
         q=q.length===1?q[0]:q
