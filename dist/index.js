@@ -142,7 +142,7 @@ var _$ = function _$(query, arg) {
       return this.__define_prop__([].concat(_toConsumableArray(Object.keys(HTMLElement.prototype)), _toConsumableArray(arr)).filter(function (i) {
         return !/^on/.test(i);
       }).reduce(function (ob, i) {
-        return ['click', 'style', 'focus', 'blur'] ? Object.assign({}, ob) : Object.assign({}, ob, _defineProperty({}, i, {
+        return ['click', 'style', 'focus', 'blur'].includes(i) ? Object.assign({}, ob) : Object.assign({}, ob, _defineProperty({}, i, {
           _get: function _get() {
             return _this4.prop(i);
           },

@@ -1,5 +1,5 @@
 
-# abQuery v 0.3.3
+# abQuery v 0.3.4
 ### Re-designing JQuery : If you are like me, you hate large js libraries 
 this is minimal library similar to Jquery in some ways with somewhat fewer features but amazing
 
@@ -13,10 +13,10 @@ It was a personal mini project to help me code js faster. If interested you can 
 To get started quickly try the CDN instead:
 
 compiled with babel for browser compatibility
-[https://cdn.jsdelivr.net/npm/abquery@0.3.3/dist/index.min.js]
+[https://cdn.jsdelivr.net/npm/abquery@0.3.4/dist/index.min.js]
 
 or may only be compatible for modern browsers.
-[https://cdn.jsdelivr.net/npm/abquery@0.3.3/dist/mb.index.min.js]
+[https://cdn.jsdelivr.net/npm/abquery@0.3.4/dist/mb.index.min.js]
 
 ## getting started using npm:
 `npm i abquery --save`
