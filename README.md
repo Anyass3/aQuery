@@ -41,30 +41,30 @@ the arg (el) can be a NodeList or an element or even a list/array of  elements
 
 
 ### query selector
-```
+```javascript
 $("a")
 $("a").$$ // ths will get the actual element 
 $("a, #navlink, p") //this queries each of those selectors in one instance
 ```
 
 ### query selectorAll
-```
+```javascript
 $('*a')
 $('* a, .nav-link') // select all _a_ tags and .nav-link in one instance
 ```
 ### create new element
-```
+```javascript
 $.new('a') or $("<a>")
 $.new('a',num=1) default
 ```
 ##### eg: create 10 anchor tags and append it to a div
-```
+```javascript
 let div=$('div')
 let anchors=$('<a>',10)
 anchors.appendParent(div.$$) || div.append(anchors.$$)
 ```
 ### existing elements
-```
+```javascript
 $(el)
 # usages example
 $('*div').on('click',(ev)=>{
@@ -78,19 +78,19 @@ $('*div').on('click',(ev)=>{
 use `.$$` to get the actual element or nodeList(for selectorAll)
 
 use `.arr[index]` to get an element an a particular index
-        eg: ```
+        eg: ```javascript
         $('*div').arr[0] //first element
         $('*div').arr[10] //element at index 10
         ```
 ### getting new single instances of $ from a query
 use `[index]` to get element as an instance of $ at a particular index
-        eg: ```
+        eg: ```javascript
         $('*div')[0] //first element as an instance
         $('*div')[10] //element at index 10 as an instance
         ```
 
 #### classes
-```
+```javascript
 .addClass(cls)
 .rmClass(cls)
 .toggleClass(cls)
@@ -108,7 +108,7 @@ use `[index]` to get element as an instance of $ at a particular index
 ```
 ## here are some cool methods and properties
 getting or setting properties or attributes
-```
+```javascript
 .prop //to get or set any property 
 .attr //to get or set any attributes. 
 
@@ -125,7 +125,7 @@ but `.attr('style')` returns the style string and `.prop('style')` returns the s
 NB: this has notthing to do with this mini library, thant's how js works
 
 ### hiding and showing elements
-```
+```javascript
 .hide() .show() // it does just that
   it can accept params
     ({cls='class-to-show-or-hide',animate='your-animate-class',delay=600,keep=false}={},func_to_run_after)
@@ -141,7 +141,7 @@ NB: this has notthing to do with this mini library, thant's how js works
 You can also write it like this: `.on(['mouseover','mouseout','click'], func)`
 
 ### dealing with styles
-```
+```javascript
 .css('width')//to get the width
 .css('width','100%') // to set the width to 100%
 .css('width','100%',true) //to set it as important
@@ -151,21 +151,21 @@ You can also write it like this: `.on(['mouseover','mouseout','click'], func)`
 ### to add a new element or new query to a query or any instance of $
 `.$(query) similar to .find in jQuery but you have to prepend '*' for selectorAll
 and .$new` of an instance of $
-```
+```javascript
 $("div#main").$new('p').text='this a new paragraph'
 
 NOTE:
-   $("div#main").$.new('p') will not work
+   $("div#main").$.new('p') // will not work
         because $.new is a static method so it 
         be called on an instance of $
         so use in case of an instance of $:
            eg:$("div#main").$new('p') or  
               $("div#main").$('<p>')
 
-find the p tag in the div#main
+// find the p tag in the div#main
 $("div#main").$('p')
 
-find all the p tag in the div#main
+// find all the p tag in the div#main
 $("div#main").$("*p") // to querySelcetorAll p tags in the div
 ```
 $() will query the document as an instance
@@ -173,7 +173,7 @@ $() will query the document as an instance
 ().$$ equals to document
 
 ### some methods
-```
+```javascript
  .run //this will run a func for all or the element queried
         eg: .run(func) || .run(e=>{})
  
@@ -201,7 +201,7 @@ $() will query the document as an instance
     // it's very useful
 ```
 #### some properties getters and setters
-```
+```javascript
  .len // to get the length of the query
 
  .index // to get the index of an element or instance of $ in a query 
@@ -224,11 +224,11 @@ $() will query the document as an instance
  .parents // similar to .parent but usefull querySelectorAll/$(*q)
  ```
  ### other getters and setters
- ```
+ ```javascript
  ["title", "lang", "translate", "dir", "hidden", "accessKey", "draggable", "spellcheck", "autocapitalize", "contentEditable", "isContentEditable", "inputMode", "offsetParent", "offsetTop", "offsetLeft", "offsetWidth", "offsetHeight", "innerText", "outerText", "dataset", "nonce", "autofocus", "tabIndex", "attachInternals", "enterKeyHint"]
  ```
 ### some useful static methods
-```
+```javascript
 $.new(tagname) // to create a new element 
 $.id(id) // similar to document.getElementById(id)
         $.id('id1,id2,etc') or $.id('id1')
@@ -283,16 +283,16 @@ $.debounce
 ```
 ##### some examples
  Get a form data without hussle
-```
+```javascript
 $("form").$("* input, select, textarea").val //this will return an object which can directly be sent to the server
 
- NOTE: the inputs should have a name or id attrs SET eg: input type file, can only be set/added by a user interraction
+ // NOTE: the inputs should have a name or id attrs SET eg: input type file, can only be set/added by a user interraction
 ```
 
  hide and show modals eg:
  let say there are elements/anchors with a data-toggle="modal" and a data-target property that is equal to a query to toggle
  like how bootstrap declares its modals
-```
+```javascript
 $("*[data-toggle=modal]").on('click',(e)=>$(`$(e.target).attr("data-target")}`).toggleClass("show"))
 
 ```
@@ -305,7 +305,7 @@ The compiled version `dist/index.js` and `dist/index.min.js`
 or only minified version `dist/mb.index.min.js`
 
 #### NOTE:
-```
+```javascript
 multiple selectors eg:- $("#nav, a, etc") can ONLY be strings separated by commas.
 
 BUT methods maybe list/array of strings OR strings separated by commas 
