@@ -293,7 +293,7 @@ $("form").$("* input, select, textarea").val //this will return an object which 
  let say there are elements/anchors with a data-toggle="modal" and a data-target property that is equal to a query to toggle
  like how bootstrap declares its modals
 ```javascript
-$("*[data-toggle=modal]").on('click',(e)=>$(`$(e.target).attr("data-target")}`).toggleClass("show"))
+$("*[data-toggle=modal]").on('click',(e)=>$(`${$(e.target).attr("data-target")}`).toggleClass("show"))
 
 ```
 
